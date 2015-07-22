@@ -1,0 +1,46 @@
+!#psg
+
+! black
+*color0: #000000
+*color8: #222222
+
+! red
+*color1: #bb0000
+*color9: #dd2222
+
+! green
+*color2:  #00bb00
+*color10: #22dd22
+
+! yellow
+*color3:  #bbbb00
+*color11: #dddd22
+
+! blue
+*color4:  #4444dd
+*color12: #5555ff
+
+! magenta
+*color5:  #bb00bb
+*color13: #dd22dd
+
+! cyan
+*color6:  #00bbbb
+*color14: #22dddd
+
+! white
+*color7:  #eeeeee
+*color15: #ffffff
+
+urxvt*saveLines: 32767
+urxvt*foreground: #f2f2f2
+urxvt*background: #101010
+urxvt*transparent: true
+urxvt*shading: 30
+urxvt*fading: 0
+urxvt*scrollBar: false
+urxvt*font: xft:Bitstream\ Vera\ Sans\ Mono:style=roman:pixelsize=13
+
+xterm*faceName: terminus:pixelsize=14
+xterm*foreground: #f2f2f2
+xterm*background: #101010

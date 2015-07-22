@@ -1,0 +1,19 @@
+#psg
+[alias]
+    tree = log --graph --pretty=oneline --abbrev-commit --decorate
+    treed = log --graph --pretty=format:'%C(bold blue)%h%C(yellow)%d %C(reset)%C(white)%s - %C(bold green)%an, %C(white)%ar%C(reset)' --abbrev-commit --date=relative
+    wip = commit -am WIP
+[color]
+    ui = true
+[core]
+    editor = vim
+    excludesfile = ~/.gitignore
+    # This is a hack to reduce diff tabstop from 8 to 4
+    pager = less -x1,5
+[push]
+    default = upstream
+[include]
+    # User preferences in a separate file for better modularity
+    path = .gituser
+[pull]
+    ff = only

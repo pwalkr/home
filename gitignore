@@ -1,0 +1,6 @@
+#psg
+
+# Vim temporary files
+*~
+*.swp
+*.swo
