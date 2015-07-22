@@ -1,7 +1,7 @@
 #psg
 [alias]
     tree = log --graph --pretty=oneline --abbrev-commit --decorate
-    treed = log --graph --pretty=format:'%C(bold blue)%h%C(yellow)%d %C(reset)%C(white)%s - %C(bold green)%an, %C(white)%ar%C(reset)' --abbrev-commit --date=relative
+    trees = log --graph --pretty=format:'%C(auto)%h %d %s - %C(bold blue)%an %C(white)%ar'
     wip = commit -am WIP
 [color]
     ui = true
