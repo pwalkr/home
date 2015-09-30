@@ -2,6 +2,19 @@
 
 #psg
 
+LASTST=$1
+LASTCMD=$2
+
+if [ "$USER" == root ]; then
+    ACCENT='\e[31m' # RED
+else
+    #ACCENT='\e[32m' # Green
+    #ACCENT='\e[33m' # Yellow
+    #ACCENT='\e[34m' # Blue
+    #ACCENT='\e[35m' # Magenta
+    ACCENT='\e[36m' # Cyan
+fi
+
 # Truncates string to the provided number of characters
 function pstrunc {
     local tgtLen=$1
@@ -138,19 +151,10 @@ function psbatt {
     return $npLen
 }
 
-LASTST=$1
-LASTCMD=$2
 TERMWID=$(tput cols)
-
 BOLD='\e[1m'
 CLEAR='\e[0m'
 WHT='\e[37m'
-if [ "$USER" == root ]; then
-    ACCENT='\e[31m' # Accent color, RED
-else
-    ACCENT='\e[36m' # Accent color, CYAN
-fi
-
 DASH="\xe2\x94\x80"
 
 FMT="${BOLD}${ACCENT}"
