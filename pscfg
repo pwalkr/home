@@ -170,19 +170,15 @@ function add_str {
     npclen=$((npclen + npcl + fmtl))
 }
 
-# Print time at start of titlebar
-add_str 0 "$(date +%T)"
+add_str 0 "${USER}@$(hostname)"
 
-
-# Add battery status if battery reports and is not 100%,
 batts=$(psbatt)
 battl=$?
 if [ 0 -ne ${battl} ]; then
     add_str $battl "$batts"
 fi
 
-# Add use@hostname
-add_str 0 "${USER}@$(hostname)"
+add_str 0 "$(date +%T)"
 
 # Add git branch/status
 gits=$(psgits)
