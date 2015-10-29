@@ -11,14 +11,14 @@ PS1='$(                                      \
         lastSt=$?; lastCmd=$(history 1);     \
         $HOME/.pscfg $lastSt "${lastCmd:7}"; \
         if [ "$lastSt" == "0" ]; then        \
-            echo -n "\[\e[32m\]";            \
+            printf "%s" \[\e[32m\];          \
         else                                 \
-            echo -n "\[\e[31m\]";            \
+            printf "%s" \[\e[31m\];          \
         fi;                                  \
         if [ "$USER" != "root" ]; then       \
-            echo -n "$ \[\e[0m\]";           \
+            printf "$%s " \[\e[0m\];         \
         else                                 \
-            echo -n "# \[\e[0m\]";           \
+            printf "#%s " \[\e[0m\];         \
         fi;                                  \
     )'
 

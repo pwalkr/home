@@ -12,7 +12,7 @@ else
     #ACCENT='\e[33m' # Yellow
     #ACCENT='\e[34m' # Blue
     #ACCENT='\e[35m' # Magenta
-    ACCENT='\e[36m' # Cyan
+    ACCENT=$(tput setaf 6) # Cyan
 fi
 
 # Truncates string to the provided number of characters
@@ -152,9 +152,8 @@ function psbatt {
 }
 
 TERMWID=$(tput cols)
-BOLD='\e[1m'
-CLEAR='\e[0m'
-WHT='\e[37m'
+BOLD=$(tput bold)
+WHT=$(tput setaf 7)
 DASH="\xe2\x94\x80"
 
 FMT="${BOLD}${ACCENT}"
@@ -191,5 +190,5 @@ fi
 cmdl=$((TERMWID - ${#titlebar} + npclen - 6))
 add_str 0 "$(pstrunc $cmdl C $LASTCMD)"
 
-printf "%b\n" "${titlebar}"
+printf "%b\n" "${titlebar}$(tput setaf 7)"
 printf "($(pstrunc 20 R $(pwd)))"
