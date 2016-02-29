@@ -1,0 +1,21 @@
+#!/bin/bash
+
+IMAGE="$1"
+
+function usage {
+	cat <<EOF
+Usage:
+	$0 <docker image>
+
+	Run a shell inside a docker image (will not preserve container)
+EOF
+}
+
+case $IMAGE in
+	'-h'|'--help'|'')
+		usage
+		exit
+		;;
+	*)
+		docker run --rm -it "$IMAGE" bash
+esac
