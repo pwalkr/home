@@ -12,7 +12,7 @@ source_dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Check for our unique identifier ($ident) in the first few lines of file
 function isUnique {
-    if [ -f "$1" -a -z "$(head -n10 $f | grep $ident 2>/dev/null)" ]; then
+    if [ -f "$1" -a -z "$(head -n10 $f | grep "$ident$" 2>/dev/null)" ]; then
         return 0
     fi
     return 1
