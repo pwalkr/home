@@ -39,4 +39,11 @@ for f in ${file_list[@]}; do
     fi
 done
 
+# sym-link bin
+if [ "$(readlink "$HOME/bin")" != "$source_dir/bin" ]; then
+	if ln -sf "$source_dir/bin" "$HOME"; then
+		echo "    Updated $HOME/bin link"
+	fi
+fi
+
 exit 0
