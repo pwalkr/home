@@ -1,0 +1,79 @@
+#!/bin/bash
+
+function usage {
+	cat <<EOF
+Usage:
+    $0 <docker image> [directory] [command]
+
+        docker image - image to compile with. See output of "docker images"
+
+        directory - folder from which to run command.
+                  - Note: no parent directories will be available from within the
+                    docker image. This directory must be the root of all relevant
+                    source
+
+        command - run a different command (default "make")
+
+    Ex: Use the base toolchain to run make with a special target:
+
+        $0 wsbu/stage-toolbox "make bin"
+
+EOF
+}
+
+IMAGE="$1"
+
+case $IMAGE in
+	''|'-h'|'--help')
+		usage
+		exit
+		;;
+	*)
+		if ! docker images | grep --quiet "^$IMAGE "; then
+			echo "\"$IMAGE\" does not appear to be a valid docker image" 1>&2
+			echo "See output of \"docker images\"" 1>&2
+			exit 1
+		fi
+esac
+
+# This is where we will mount "source" within the docker container
+MOUNT=/mnt
+
+DIRECTORY=".";
+COMMAND="make"
+
+if [ -d "$2" ]; then
+	DIRECTORY="$2"
+# If no directory, assume command
+elif [ -n "$2" ]; then
+	COMMAND="$2"
+fi
+
+if [ -n "$3" ]; then
+	# If we have a 3rd argument but already found a command (2nd argument was
+	# not directory), something is wrong
+	if [ ! -d "$2" ]; then
+		echo "Multiple commands found:" 1>&2
+		echo "    $2" 1>&2
+		echo "    $3" 1>&2
+		echo  1>&2
+		usage 1>&2
+		exit 1
+	fi
+	COMMAND="$3"
+fi
+
+# Get an absolute path
+DIRECTORY="$(cd $DIRECTORY && pwd)"
+
+# Run command from mounted directory
+COMMAND="sh -c 'cd $MOUNT && $COMMAND; sleep 5'"
+
+# This will run the container as current user/group, so all created files will
+# be owned by the same (instead of root)
+DOCKER_USER="--user $UID:$(id -g $UID)"
+
+DOCKER_VOLUME="--volume '$DIRECTORY:$MOUNT'"
+
+echo "docker run --rm $DOCKER_USER $DOCKER_VOLUME $IMAGE $COMMAND"
+eval "docker run --rm $DOCKER_USER $DOCKER_VOLUME $IMAGE $COMMAND"
