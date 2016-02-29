@@ -33,3 +33,5 @@ alias ls='ls --color=auto'
 alias ll='ls -al'
 alias vi='vim'
 alias cpr='rsync --archive --progress'
+
+PATH="$HOME/bin:$PATH"
