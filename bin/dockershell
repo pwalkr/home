@@ -1,21 +1,55 @@
 #!/bin/bash
 
-IMAGE="$1"
-
 function usage {
 	cat <<EOF
 Usage:
-	$0 <docker image>
+    $0 [-u] [-m <dir>] <docker image>
 
-	Run a shell inside a docker image (will not preserve container)
+        docker image - image to run. See output of "docker images"
+
+        -u:       run as current user
+        -m <dir>: mount directory as /mnt inside container
 EOF
 }
 
-case $IMAGE in
-	'-h'|'--help'|'')
-		usage
-		exit
-		;;
-	*)
-		docker run --rm -it "$IMAGE" bash
-esac
+USER_FLAG=
+VOLUME_FLAG=
+
+while getopts "hum:" opt; do
+	case $opt in
+		h)
+			usage
+			exit
+			;;
+		u)
+			USER_FLAG="--user $UID:$(id -g $UID)"
+			;;
+		m)
+			if [ -d "$OPTARG" ]; then
+				VOLUME_FLAG="--volume $(cd "$OPTARG"; pwd):/mnt"
+			else
+				echo "$OPTARG is not a valid directory"
+				exit 1
+			fi
+			;;
+	esac
+done
+shift $((OPTIND-1))
+
+IMAGE="$1"
+
+if [ -z "$IMAGE" ]; then
+	usage
+	exit 1
+fi
+
+if ! docker images | grep --quiet "^$IMAGE "; then
+	echo "\"$IMAGE\" does not appear to be a valid docker image" 1>&2
+	echo "See output of \"docker images\"" 1>&2
+	exit 1
+fi
+
+DKRUN="docker run --rm -it $USER_FLAG $VOLUME_FLAG $IMAGE bash"
+
+echo $DKRUN
+eval "$DKRUN"

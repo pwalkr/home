@@ -41,6 +41,8 @@ MOUNT=/mnt
 
 DIRECTORY=".";
 COMMAND="make"
+# custom image name to ensure removal
+DKRMK="dkrmk"
 
 if [ -d "$2" ]; then
 	DIRECTORY="$2"
@@ -67,7 +69,7 @@ fi
 DIRECTORY="$(cd $DIRECTORY && pwd)"
 
 # Run command from mounted directory
-COMMAND="sh -c 'cd $MOUNT && $COMMAND; sleep 5'"
+COMMAND="sh -c 'cd $MOUNT && $COMMAND'"
 
 # This will run the container as current user/group, so all created files will
 # be owned by the same (instead of root)
@@ -75,5 +77,11 @@ DOCKER_USER="--user $UID:$(id -g $UID)"
 
 DOCKER_VOLUME="--volume '$DIRECTORY:$MOUNT'"
 
-echo "docker run --rm $DOCKER_USER $DOCKER_VOLUME $IMAGE $COMMAND"
-eval "docker run --rm $DOCKER_USER $DOCKER_VOLUME $IMAGE $COMMAND"
+# "--rm" should remove the container after the command exits. However, I've seen
+# it try to remove the container too soon. Trying this to see if it is any safer
+echo "docker run"   "--rm"    "$DOCKER_USER $DOCKER_VOLUME $IMAGE $COMMAND"
+eval "docker run --name $DKRMK $DOCKER_USER $DOCKER_VOLUME $IMAGE $COMMAND"
+# wait for the container to really exit
+docker wait $DKRMK >/dev/null
+docker diff $DKRMK
+docker rm $DKRMK >/dev/null
