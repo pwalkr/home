@@ -21,61 +21,62 @@ Usage:
 EOF
 }
 
-IMAGE="$1"
-
-case $IMAGE in
-	''|'-h'|'--help')
-		usage
-		exit
-		;;
-	*)
-		if ! docker images | grep --quiet "^$IMAGE "; then
-			echo "\"$IMAGE\" does not appear to be a valid docker image" 1>&2
-			echo "See output of \"docker images\"" 1>&2
-			exit 1
-		fi
-esac
+# custom image name to ensure removal
+DKRMK="dkrmk"
 
 # This is where we will mount "source" within the docker container
 MOUNT=/mnt
 
-DIRECTORY=".";
+DOCKER_USER=
+DOCKER_VOLUME="--volume '$(pwd):$MOUNT'"
+
+while getopts "C:hu" opt; do
+	case $opt in
+		h)
+			usage
+			exit
+			;;
+		C)
+			if [ -d "$OPTARG" ]; then
+				DOCKER_VOLUME="--volume '$(cd "$OPTARG"; pwd):$MOUNT'"
+			else
+				echo "$OPTARG is not a valid directory"
+				exit 1
+			fi
+			;;
+		u)
+			# This will run the container as current user/group, so all created
+			# files will be owned by the same (instead of root)
+			DOCKER_USER="--user $UID:$(id -g $UID)"
+			;;
+	esac
+done
+shift $((OPTIND-1))
+
+IMAGE="$1"
 COMMAND="make"
-# custom image name to ensure removal
-DKRMK="dkrmk"
 
-if [ -d "$2" ]; then
-	DIRECTORY="$2"
-# If no directory, assume command
-elif [ -n "$2" ]; then
-	COMMAND="$2"
+if ! docker images | grep --quiet "^$IMAGE "; then
+	echo "\"$IMAGE\" does not appear to be a valid docker image" 1>&2
+	echo "See output of \"docker images\"" 1>&2
+	exit 1
 fi
-
-if [ -n "$3" ]; then
-	# If we have a 3rd argument but already found a command (2nd argument was
-	# not directory), something is wrong
-	if [ ! -d "$2" ]; then
-		echo "Multiple commands found:" 1>&2
-		echo "    $2" 1>&2
-		echo "    $3" 1>&2
-		echo  1>&2
-		usage 1>&2
-		exit 1
-	fi
-	COMMAND="$3"
+shift
+if [ -n "$1" ]; then
+	COMMAND=$1
+	shift
+	for arg in "$@"; do
+		arg=${arg//\"/\\\"}
+		arg=${arg// /\\ }
+		COMMAND="$COMMAND $arg"
+	done
 fi
 
 # Get an absolute path
 DIRECTORY="$(cd $DIRECTORY && pwd)"
 
 # Run command from mounted directory
-COMMAND="sh -c 'cd $MOUNT && $COMMAND'"
-
-# This will run the container as current user/group, so all created files will
-# be owned by the same (instead of root)
-DOCKER_USER="--user $UID:$(id -g $UID)"
-
-DOCKER_VOLUME="--volume '$DIRECTORY:$MOUNT'"
+COMMAND="sh -c \"cd $MOUNT && $COMMAND\""
 
 # "--rm" should remove the container after the command exits. However, I've seen
 # it try to remove the container too soon. Trying this to see if it is any safer
