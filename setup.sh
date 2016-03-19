@@ -46,4 +46,11 @@ if [ "$(readlink "$HOME/bin")" != "$source_dir/bin" ]; then
 	fi
 fi
 
+# sym-link bash_completion.d
+if [ "$(readlink "$HOME/.bash_completion.d")" != "$source_dir/bash_completion.d" ]; then
+	if ln -sf "$source_dir/bash_completion.d" "$HOME/.bash_completion.d"; then
+		echo "    Updated $HOME/.bash_completion.d link"
+	fi
+fi
+
 exit 0

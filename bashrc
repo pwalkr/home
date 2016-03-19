@@ -34,4 +34,10 @@ alias ll='ls -al'
 alias vi='vim'
 alias cpr='rsync --archive --progress'
 
+if [ -d $HOME/.bash_completion.d ]; then
+	for f in $HOME/.bash_completion.d/*; do
+		source "$f"
+	done
+fi
+
 PATH="$HOME/bin:$PATH"

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+_docker_images() {
+	local cur images
+	COMPREPLY=()
+	cur="${COMP_WORDS[COMP_CWORD]}"
+
+	images="$(docker images | awk '{print $1}' | grep -v "^<none>$\|^REPOSITORY$" | sort --unique)"
+
+	COMPREPLY=( $(compgen -W "${images//$'\n'/ }" -- "$cur") )
+}
+
+complete -F _docker_images dockershell
