@@ -49,7 +49,5 @@ if ! docker images | grep --quiet "^$IMAGE "; then
 	exit 1
 fi
 
-DKRUN="docker run --rm -it $USER_FLAG $VOLUME_FLAG $IMAGE bash"
-
-echo $DKRUN
-eval "$DKRUN"
+echo docker run --rm -it $USER_FLAG $VOLUME_FLAG $IMAGE bash
+eval docker run --rm -it $USER_FLAG $VOLUME_FLAG $IMAGE bash
