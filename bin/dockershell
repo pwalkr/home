@@ -49,5 +49,5 @@ if ! docker images | grep --quiet "^$IMAGE "; then
 	exit 1
 fi
 
-echo docker run --rm -it $USER_FLAG $VOLUME_FLAG $IMAGE bash
-eval docker run --rm -it $USER_FLAG $VOLUME_FLAG $IMAGE bash
+echo docker run --entrypoint bash --rm --interactive --tty $USER_FLAG $VOLUME_FLAG $IMAGE
+eval docker run --entrypoint bash --rm --interactive --tty $USER_FLAG $VOLUME_FLAG $IMAGE
