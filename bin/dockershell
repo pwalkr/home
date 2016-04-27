@@ -43,7 +43,8 @@ if [ -z "$IMAGE" ]; then
 	exit 1
 fi
 
-if ! docker images | grep --quiet "^$IMAGE "; then
+# docker images <image name> will produce an image ID, otherwise search all images for image ID
+if [ -z "$(docker images --quiet "$IMAGE")" ] && ! docker images --quiet | grep --quiet "$IMAGE"; then
 	echo "\"$IMAGE\" does not appear to be a valid docker image" 1>&2
 	echo "See output of \"docker images\"" 1>&2
 	exit 1
