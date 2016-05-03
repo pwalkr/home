@@ -1,0 +1,33 @@
+#!/bin/bash
+
+usage() {
+	cat <<-EOF
+		scrub: clean up old docker images and containers
+
+		Call without arguments to remove any stopped containers and
+		un-named (<none>:<none>) images.
+
+	EOF
+}
+
+scrub_containers() {
+	for id in $(docker ps -a --quiet); do
+		if ! docker ps | grep --quiet $id; then
+			docker rm $id
+		fi
+	done
+}
+
+scrub_untagged() {
+	for id in $(docker images | grep "^<none>" | awk '{print $3}'); do
+		docker rmi $id
+	done
+}
+
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+	usage
+	exit
+fi
+
+scrub_containers
+scrub_untagged
