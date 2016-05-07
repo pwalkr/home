@@ -1,0 +1,19 @@
+#!/bin/bash
+
+usage() {
+	cat <<-EOF
+		Usage:
+	EOF
+}
+
+while true; do
+	case "$1" in
+		--help|-help)
+			usage
+			exit
+		*)
+			break
+			;;
+	esac
+	shift
+done
