@@ -1,0 +1,94 @@
+#!/usr/bin/expect
+
+set host "none"
+set pass "none"
+set prompt "$ "
+
+if {0 == $argc} {
+    puts "Usage: sendkey.exp <host> \[password\]"
+    exit 0
+}
+set host [lindex $argv 0]
+
+if {2 == $argc} {
+    set pass [lindex $argv 1]
+}
+
+proc getPass {} {
+	global pass
+	# Turn off echoing, but leave newlines on.  That looks better.
+	# Note that the terminal is left in cooked mode, so people can still use backspace
+	exec stty -echo echonl <@stdin
+
+	#puts -nonewline stdout "Password: "
+	flush stdout
+
+	gets stdin pass
+
+	# Reset the terminal
+	exec stty echo -echonl <@stdin
+}
+
+proc err {msg} {
+    puts $msg
+    exit 1
+}
+
+set timeout 10
+
+spawn ssh-copy-id -o StrictHostKeyChecking=no $host
+
+expect {
+	"password:" {
+		if {$pass == "none"} {getPass}
+		send "$pass\n"
+	}
+	"Permission denied " {
+		puts "ssh-keygen -R [regsub {^.*@} $host ""]"
+		exec ssh-keygen -R [regsub {^.*@} $host ""]
+		close
+		spawn ssh-copy-id -o StrictHostKeyChecking=no $host
+	}
+	"already exist on the remote system." {
+		puts "Key already sent"
+		exit 0
+	}
+	"Connection refused" {
+		puts "SSH server not responding"
+		exit 1
+	}
+	timeout {
+		puts "\nSomething went wrong"
+		exit 1
+	}
+}
+expect {
+	"were added." {
+		puts "Key successfully sent"
+		exit 0
+	}
+	"password:" {
+		if {$pass == "none"} {getPass}
+		send "$pass\n"
+	}
+	timeout {
+		puts "\nSomething went wrong"
+		exit 1
+	}
+}
+expect {
+	expect {
+		"were added." {
+			puts "Key successfully sent"
+			exit 0
+		}
+	}
+	"password:" {
+		puts "\nWrong username or password"
+		exit 1
+	}
+	timeout {
+		puts "\nSomething went wrong"
+		exit 1
+	}
+}

@@ -1,0 +1,380 @@
+#!/bin/bash
+lh="html2"
+rh="/home/httpd/jbmconfig/html"
+function doSyncs {
+syncfile '../test.pl' '/tmp'
+syncfile '../subtest.pl' '/tmp'
+syncfile '../test.sh' '/tmp'
+syncfile '../subtest.sh' '/tmp'
+
+syncfile '../crimson-access.pl' '/bin'
+#syncfile '../perlctl/perlcontrol_manager.sh' '/bin'
+#syncfile '../perlctl/perlcontrol_compile.pl' '/bin'
+#syncfile '../scriptcontrol.init' '/etc/init.d/scriptcontrol'
+#syncfile '../iodblib.pl' '/etc/jbm'
+syncfile '../carriershim.sh' '/bin'
+#syncfile '../carriershim_test.sh' '/bin'
+#syncfile '../99_scriptcontrolinit.sh' '/etc/poststart'
+syncfile '../firstboot_50-gau.pl' '/etc/jbm/recovery/firstboot/modules'
+syncfile '../shim_50-tags.pl' '/etc/jbm/recovery/firstboot/shim'
+#syncfile '../ipsec_status.pl' '/bin/'
+#syncfile '../psminder.pl' '/bin'
+#syncfile '../sctllib.pl' '/etc/jbm'
+
+syncfile 'env2' '/etc/env2/env2.orig'
+syncfile 'env2' '/etc/env2/env2'
+syncfile '../env2/env2.pl' '/etc/env2'
+syncfile '../env2/env2.sh' '/etc/env2'
+syncfile '../env2/gen_env2.hw.sh' '/etc/env2'
+#syncfile '../env2/check_env2' '/etc/cron.5min'
+
+#syncfile 'bin/gendmptoken' '/home/httpd/jbmconfig/bin'
+#syncfile 'bin/connectBlue.sh' '/home/httpd/jbmconfig/bin'
+#syncfile 'bin/connectBlue.pl' '/home/httpd/jbmconfig/bin'
+#syncfile 'bin/cachefix.sh' '/home/httpd/jbmconfig/bin'
+syncfile 'bin/cfgsync.sh' '/home/httpd/jbmconfig/bin'
+#syncfile 'bin/getscriptlist' '/home/httpd/jbmconfig/bin'
+syncfile 'bin/gau_sysinit.sh' '/home/httpd/jbmconfig/bin'
+syncfile 'bin/tags_manager.pl' '/home/httpd/jbmconfig/bin'
+syncfile 'bin/wifi_ath9k_backend.pl' '/home/httpd/jbmconfig/bin'
+
+syncfile 'cgi-bin/atcmd.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/carriershim.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/cfgmgr.cgi' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/cgi-lib.pl' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/displayafile.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/downloader.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/env2cgi.pl' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/getiodbstarts.sh' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/getiodbstarts.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/getstatii.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/gps_status.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/jsonlib.pl' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/jobctrlscript.cgi' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/listgatherstats.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/ping.cgi' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/ping-stream.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/straton.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/tags.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/tcpdump.cgi' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/prep4flash' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/md5cache.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/vnstat.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/updcfg.cgi' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/upload.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/uploadlib.pl' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/telnet.cgi' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/traceroute.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/about.cgi' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/fileserve.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/getSvmStatus.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/listcgi.cgi' '/home/httpd/jbmconfig/cgi-bin'
+#syncfile 'cgi-bin/slog.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/test_cgi.pl' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'cgi-bin/xfgweb.cgi' '/home/httpd/jbmconfig/cgi-bin'
+syncfile 'conf/sysfetch.conf' '/home/httpd/jbmconfig/conf'
+syncfile 'conf/cellular.prf' '/home/httpd/jbmconfig/conf'
+#syncfile 'conf/gatherconfigs.prf' '/home/httpd/jbmconfig/conf'
+#syncfile 'conf/gatherstats.prf' '/home/httpd/jbmconfig/conf'
+#syncfile 'conf/events.prf' '/home/httpd/jbmconfig/conf'
+syncfile 'conf/ipsectunnel.prf' '/home/httpd/jbmconfig/conf'
+#syncfile 'conf/jobctrl.prf' '/home/httpd/jbmconfig/conf'
+#syncfile 'conf/systime.prf' '/home/httpd/jbmconfig/conf'
+#syncfile 'conf/dmp.prf' '/home/httpd/jbmconfig/conf'
+syncfile 'conf/gauaccess.prf' '/home/httpd/jbmconfig/conf'
+#syncfile 'conf/profile.xml' '/home/httpd/jbmconfig/conf'
+#syncfile 'conf/sshserver.prf' '/home/httpd/jbmconfig/conf'
+#syncfile 'html/classicview.html' '/home/httpd/jbmconfig/html'
+#syncfile 'html/batch_io.html' '/home/httpd/jbmconfig/html'
+#syncfile 'txt/allowfile.txt' '/home/httpd/jbmconfig/txt'
+#syncfile 'txt/customTabs.txt' '/home/httpd/jbmconfig/txt'
+syncfile 'txt/tags-sentry.csv' '/home/httpd/jbmconfig/txt'
+syncfile 'txt/tags-snram.csv' '/home/httpd/jbmconfig/txt'
+#syncfile 'txt/tags-status.csv' '/home/httpd/jbmconfig/txt'
+
+hp="main.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="index-default.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+#hp="help/h_HELP.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="help/h_dmp_dmplistenport.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="help/h_dmp_enable.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_cellular_cmignorereg.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_cellular_forceapn.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_activationdelay.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_alarmvalue.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_clearevent.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_datasource.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_deactivationdelay.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_enable.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_eventexpression.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_eventname.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_eventtype.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_leveltriggering.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_recipient.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_usage.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_event_writevalue.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_gps_enginestate.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_provisioning_apn.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_provisioning_carrier.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_snproxy_enable.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_snproxy_hostip.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_snproxy_hostport.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_snproxy_http.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_snproxy_https.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_snproxy_listenport.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_snproxy_snproxypw.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_snproxy_snproxyun.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="help/h_systime_date.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="help/h_systime_time.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="help/h_tcpdump_capsize.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="help/h_tcpdump_filter.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="help/h_tcpdump_snaplen.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+#hp="js/GauConfig.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="js/GauWeb.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/GauWeb.commfunc.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="js/GauWeb.obj.managedTable.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="js/GauWeb-iodb.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/Loader.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/UploadManager.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="js/ValidationManager.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="js/validate.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/bootstrap.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/bootstrap.min.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/jquery-1.11.1.min.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/jquery-ui-1.10.3.custom.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="js/lib/jquery-ui-1.11.2.min.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="js/lib/jquery-ui-1.11.2-custom.min.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="js/lib/jquery.nestedAccordion-1.4.7.4.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/jquery.ui.combobox.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/knockout.combobox.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/knockout-2.2.1.custom.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/knockout-3.2.0.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/knockout-jqueryui-v0.6.0.min.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/knockout-jqueryui-v0.7.1.min.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/knockout-jqueryui-2.1.0.min.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/pager.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/pager-1.0.1.min.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/require-2.1.11.min.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="js/lib/select2-3.5.1-min.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+#hp="css/bootstrap.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/bootstrap.min.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/bootstrap-responsive.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/bootstrap-responsive.min.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/bootstrap-responsive-2.3.2.min.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/bootstrap-3.1.1.min.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="css/jquery-ui-1.11.2.min.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="css/jquery-ui-1.11.2-theme.min.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="css/jquery-ui-1.11.2-structure.min.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/jquery.ui.combobox.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/knockout.combobox.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/select2-3.5.1.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/select2-bootstrap-3.5.1.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="css/extra.css"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+#hp="images/redlion_logo.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="images/favicon.ico"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-bg_diagonals-thick_18_b81900_40x40.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-bg_diagonals-thick_20_666666_40x40.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-bg_flat_10_000000_40x100.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-bg_glass_100_f6f6f6_1x400.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-bg_glass_100_fdf5ce_1x400.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-bg_glass_65_ffffff_1x400.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-bg_gloss-wave_35_f6a828_500x100.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-bg_highlight-soft_100_eeeeee_1x100.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-bg_highlight-soft_75_ffe45c_1x100.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-icons_222222_256x240.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-icons_228ef1_256x240.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-icons_ef8c08_256x240.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-icons_ffd27a_256x240.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="css/images/ui-icons_ffffff_256x240.png"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+hp="pages/atcmd.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/atcmd.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+hp="pages/debug.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/debug.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+# Status pages
+hp="pages/start.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/start.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/easyconfig.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/easyconfig.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/vnstat.html";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/vnstat.js";     syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/dispcsq.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/dispcsq.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/disparp.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/disparp.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dispfwtbls.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dispfwtbls.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dispintfsum.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dispintfsum.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/disproutes.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/disproutes.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dispsockets.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dispsockets.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/ping.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/ping.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/tcpdump.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/tcpdump.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/telnet.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/telnet.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/traceroute.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/traceroute.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/syslog.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/syslog.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/gatherstats.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/gatherstats.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+# Admin pages
+hp="pages/jobctrl.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/jobctrl.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/certmgr.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/certmgr.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/systime.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/systime.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/gauaccess.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/gauaccess.js";  syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/firmware.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/firmware.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/cfgmgr.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/cfgmgr.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/pkgmgr.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/pkgmgr.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/factorydefault.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/factorydefault.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+# Network pages
+hp="pages/provisioning.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/provisioning.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/carrier.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/carrier.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/cellular.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/cellular.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dns.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dns.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/ipip.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/ipip.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/ipsec.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/ipsec.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/fwgeneral.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/fwgeneral.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/redirect.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/redirect.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/masqnat.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/masqnat.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/access.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/access.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/filter.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/filter.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/gre.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/gre.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/pppdial.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/pppdial.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dmz.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dmz.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/eth0.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/eth0.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/eth1.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/eth1.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/usb.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/usb.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/switchctl.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/switchctl.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/keepalive.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/keepalive.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/staticroutes.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/staticroutes.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/wifi.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/wifi.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+# Service pages
+#hp="pages/dmp.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dmp.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/events.html";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/events.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/ipfallback.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/ipfallback.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/vipr.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/vipr.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dyndns.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dyndns.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/gps.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/gps.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/snmp.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/snmp.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/snproxy.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/snproxy.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/svm.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/svm.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/pingalive.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/pingalive.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/dhcpserver.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/dhcpserver.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/sshd.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/sshd.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/serialip.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/serialip.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+# Automation pages
+#hp="pages/analoginput.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/analoginput.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/binaryinput.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/binarycounter.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/floatinput.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/longinput.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/ioctrl.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/ioctrl.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/serial.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/serial.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/straton.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/straton.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/crimson.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/crimson.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/classiclaunch.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/classiclaunch.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/dnp3_config.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/dnp3_config.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/dnp3_physicallink.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/localstation.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/localstation.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/modbus_config.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/modbus_config.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/modbus_remotestations.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/modbus_remotestations.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/modbus_transfers.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/modbus_transfers.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/extendedio.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/extendedio.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/tags.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/tags.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/testio.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/testio.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+
+# Advanced pages
+#hp="pages/installapp.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/installcfg.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/installcfg.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/iptrans.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/iptrans.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/ipdest.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/ipdest.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/oob.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/oob.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/vrrp.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/vrrp.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/scriptcontrol.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/scriptcontrol.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/configure.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/configure.js"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/gwlnx_clistat.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/gwlnx_clistat.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/gwlnx_log.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/gwlnx_log.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/gwlnx_status.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+#hp="pages/gwlnx_status.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/about.html"; syncfile "${lh}/${hp}" "${rh}/${hp}"
+hp="pages/about.js";   syncfile "${lh}/${hp}" "${rh}/${hp}"
+}

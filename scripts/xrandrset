@@ -1,0 +1,25 @@
+#!/bin/sh
+
+#res="1024x768"
+#res="1280x960"
+res="1280x1024" # Mom's Envision
+#res="1400x1050"
+#res="1440x900"
+#res="1920x1080" # Work Monitor
+#res="1920x1200"
+
+#xrandr --output LVDS1 --mode 1600x900 --pos 0x320 --rotate normal
+#xrandr --output VGA1 --mode $res --pos 1600x0 --rotate normal
+#xrandr --output VGA2 --mode $res --pos 1600x0 --rotate normal
+
+function sethdmi {
+	xrandr --output DVI-I-1 --off
+	xrandr --output HDMI-1 --mode 3840x2160 --pos 0x0 --rotate normal
+	xrandr --output VGA-1 --mode 1680x1050 --pos 3840x0 --rotate normal
+}
+
+function setdvi {
+	xrandr --output HDMI-1 --off
+	xrandr --output DVI-I-1 --mode 1920x1080 --pos 0x0 --rotate normal
+	xrandr --output VGA-1 --mode 1680x1050 --pos 1920x0 --rotate normal
+}
