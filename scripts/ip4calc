@@ -1,0 +1,65 @@
+#!/bin/bash
+
+i4c_network() {
+	local ip=( ${1//./ } )
+	local subnet=( ${2//./ } )
+
+	printf "$((ip[0] & subnet[0]))."
+	printf "$((ip[1] & subnet[1]))."
+	printf "$((ip[2] & subnet[2]))."
+	printf "$((ip[3] & subnet[3]))\n"
+}
+
+i4c_broadcast() {
+	local ip=$(i4c_ip2int $1)
+	local subnet=$(i4c_ip2int $2)
+
+	# This looks wrong ( -256^4 XOR subnet )
+	# Run test on your system to make sure this magic number is correct
+	subnet=$((-4294967296^subnet))
+
+	echo $(i4c_int2ip $((ip | ~subnet)))
+}
+
+i4c_mask2cidr() {
+	local cidr=0
+	for oct in ${1//./ }; do
+		case $oct in
+			255) ((cidr+=8));;
+			254) ((cidr+=7));;
+			252) ((cidr+=6));;
+			248) ((cidr+=5));;
+			240) ((cidr+=4));;
+			224) ((cidr+=3));;
+			192) ((cidr+=2));;
+			128) ((cidr+=1));;
+			0);;
+		esac
+	done
+	echo $cidr
+}
+
+i4c_cidr2mask()
+{
+	local mask=$((0xffffffff << (32 - $1)))
+
+	echo $(i4c_int2ip $mask)
+}
+
+i4c_ip2int() {
+	local ip=$1
+	local octets=( ${ip//./ } )
+
+	echo $((octets[0]*16777216 + octets[1]*65536 + octets[2]*256 + octets[3]))
+}
+
+i4c_int2ip() {
+	local int=$1
+	local ip=$((int%256))
+	for i in 3 2 1; do
+		int=$((int/256))
+		ip="$((int%256)).$ip"
+	done
+
+	echo $ip
+}

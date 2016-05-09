@@ -1,0 +1,66 @@
+#!/bin/bash
+
+source "$(dirname $0)/ip4calc"
+
+ipaddr="192.168.0.1"
+ipint="3232235521"
+
+netmask="255.255.255.0"
+bits="24"
+
+network="192.168.0.0"
+broadcast="192.168.0.255"
+
+result=$(i4c_ip2int $ipaddr)
+if [ $ipint == "$result" ]; then
+	echo "Success: i4c_ip2int $ipaddr is $ipint"
+else
+	echo "Failed to generate integer from ip"
+	echo "    expected $ipint"
+	echo "    got      $result"
+fi
+
+result=$(i4c_int2ip $ipint)
+if [ $ipaddr == "$result" ]; then
+	echo "Success: i4c_int2ip $ipint is $ipaddr"
+else
+	echo "Failed to generate ip from integer"
+	echo "    expected $ipaddr"
+	echo "    got      $result"
+fi
+
+result=$(i4c_mask2cidr $netmask)
+if [ $bits == "$result" ]; then
+	echo "Success: i4c_mask2cidr $netmask is $bits"
+else
+	echo "Failed to generate cidr bits from netmask"
+	echo "    expected $bits"
+	echo "    got      $result"
+fi
+
+result=$(i4c_cidr2mask $bits)
+if [ $netmask == "$result" ]; then
+	echo "Success: i4c_cidr2mask $bits is $netmask"
+else
+	echo "Failed to generate netmask from cidr bits"
+	echo "    expected $netmask"
+	echo "    got      $result"
+fi
+
+result=$(i4c_network $ipaddr $netmask)
+if [ $network == "$result" ]; then
+	echo "Success: i4c_network $ipaddr $netmask is $network"
+else
+	echo "Failed to generate network address"
+	echo "    expected $network"
+	echo "    got      $result"
+fi
+
+result=$(i4c_broadcast $ipaddr $netmask)
+if [ $broadcast == "$result" ]; then
+	echo "Success: i4c_broadcast $ipaddr $netmask is $broadcast"
+else
+	echo "Failed to generate broadcast address"
+	echo "    expected $broadcast"
+	echo "    got      $result"
+fi
