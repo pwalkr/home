@@ -1,30 +1,54 @@
 #!/usr/bin/perl
 
+use strict;
+use warnings;
+
 sub usage {
 print <<EOF;
 Usage:
     tarpush.pl <bom file> <device ip>
 
+This will push files in the bom to a device using "ssh root@<device ip>" and
+piping to the tar command.
+
+FIRST RUN: will NOT copy any files over. It is just a baseline md5sum sync.
+
+The second and subsequent runs will copy files over as changed.
+
+Typical Workflow:
+
+    1. Flash device to latest "dev" image
+    2. Navigate to http://<device ip>/#!/sshd and enable ssh with root access
+    3. Checkout latest "dev" branch in source
+    4. Run tarpush.pl to send ssh key and get baseline cache
+    5. Done!
+        Re-run tarpush.pl to push any modified files
+
 EOF
 exit;
 }
 
-if (! -f $ARGV[0]) {
+if ($#ARGV < 1 or ! -f $ARGV[0]) {
 	&usage();
 }
 
 my $BOM_CSV = $ARGV[0];
-chomp(my $BOM_DIR = `cd "\$(basename "\$(dirname $BOM_CSV)")"; pwd`);
-my %BOM = ();
-
 my $IP = $ARGV[1];
-my $CACHE_FILE = "/tmp/cache-tarpush_$IP";
 
+# Hashes using target files as keys (helps avoid duplicate sources)
+my %BOM = ();
 my %CACHE = ();
 
-chomp( my $LINK_DIR = `mktemp -d` );
+chomp(my $BOM_DIR = `cd "\$(dirname $BOM_CSV)"; pwd`);
+my $CACHE_FILE = "/tmp/cache-tarpush_$IP";
+
+#
+# Primary logic:
+#
 
 &read_bom();
+
+chomp( my $LINK_DIR = `mktemp -d` );
 
 if (-f $CACHE_FILE) {
 	&read_cache();
@@ -32,9 +56,12 @@ if (-f $CACHE_FILE) {
 	&tar_push();
 }
 else {
-	# First run, just dump to cache and write
+	print "Sending ssh key for first sync\n";
+	&send_key();
+
+	# First run just syncs current md5
 	foreach (sort keys %BOM) {
-		print "caching /$_ ($BOM_DIR/$BOM{$_}{source})\n";
+		print "CACHING: /$_ ($BOM_DIR/$BOM{$_}{source})\n";
 		$CACHE{$_} = $BOM{$_}{md5sum}
 	}
 }
@@ -43,7 +70,43 @@ else {
 
 system("rm --recursive --force $LINK_DIR");
 
+#
+# Utility Functions
+#
 
+# Copy ssh key to device so we only have to enter our password once.
+sub send_key {
+	my $retry = shift;
+	my $output = `ssh-copy-id -o StrictHostKeyChecking=no root\@$IP 2>&1`;
+
+	if ($output =~ "Connection refused") {
+		print "Connection refused. Are you sure ssh is running?\n\n";
+		print "Ensure ssh is enabled, allowing root access:\n";
+		print "    http://$IP:10000/#!/sshd\n\n";
+		exit 1;
+	}
+	# Device ID changes every time you reflash, this is not a bad thing.
+	elsif ($output =~ "REMOTE HOST IDENTIFICATION HAS CHANGED") {
+		if ($retry) {
+			print "Unable to send ssh key\n";
+			exit 1;
+		}
+		print "Device key has changed. Assuming reflash.\n";
+		print "Clearing key and trying again.\n";
+		system("ssh-keygen -R $IP");
+		&send_key(1);
+	}
+	# Matching something looking like "Permission denied (publickey,password,keyboard-interactive)."
+	elsif ($output =~ "Permission denied" and $output =~ "publickey" and $output =~ "password") {
+		print "Permission denied. Are you sure you have the right password?\n";
+		exit 1;
+	}
+	else {
+		print $output;
+	}
+}
+
+# Bom is a csv with the first two fields being <target>,<source>
 sub read_bom {
 	open (my $bfh, $BOM_CSV) or die "Failed to open BOM";
 	while (<$bfh>) {
@@ -65,6 +128,7 @@ sub read_bom {
 	close($bfh);
 }
 
+# Read cache file of md5sum-style lines: <hash>  <target>
 sub read_cache {
 	open (my $cfh, $CACHE_FILE) or die "Failed to open cache";
 	while (<$cfh>) {
@@ -79,6 +143,7 @@ sub read_cache {
 	close($cfh);
 }
 
+# Write cache file of md5sum-style lines: <hash>  <target>
 sub write_cache {
 	open (my $cfh, '>', $CACHE_FILE) or die "Failed to open cache";
 	foreach (sort keys %CACHE) {
@@ -87,12 +152,13 @@ sub write_cache {
 	close($cfh);
 }
 
+# Create a shadow directory of any files in the BOM that have been modified
 sub gen_links {
 	my $cached;
 
 	foreach (sort keys %BOM) {
 		if (exists $CACHE{$_}) {
-			$cached =  $CACHE{$_};
+			$cached = $CACHE{$_};
 		}
 		else {
 			$cached = "";
