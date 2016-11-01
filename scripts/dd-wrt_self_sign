@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# Save this as an executable in /jffs/etc/config/*.startup
+# https://www.dd-wrt.com/wiki/index.php/Script_Execution
+
+MOUNT="/jffs"
+
+CNF="$MOUNT/openssl.cnf"
+KEY="$MOUNT/key.pem"
+CERT="$MOUNT/cert.pem"
+
+setup_config() {
+	if [ -f "$CNF" ]; then
+		# Nothing to do
+		return
+	fi
+
+	if ! touch "$CNF"; then
+		echo "Failed to write certificate. Are you sure jffs is enabled?" 1>&2
+		exit 1
+	fi
+
+	# DD-WRT Doesn't have much in default openssl config. Openssl complains
+	# if the following doesn't exist
+	cat <<-EOF> "$CNF"
+		[req]
+		distinguished_name = req_distinguished_name
+
+		[req_distinguished_name]
+	EOF
+}
+
+setup_cert() {
+	if [ -f "$CERT" -a -f "$KEY" ]; then
+		# Nothing to do
+		return
+	fi
+
+	openssl req \
+		-x509 \
+		-newkey rsa:4096 \
+		-days 120 \
+		-nodes \
+		-subj "/CN=$(hostname)" \
+		-config "$CNF" \
+		-keyout "$KEY" -out "$CERT"
+}
+
+setup_bind() {
+	grep -q "/etc/cert.pem" /proc/mounts || mount -o bind "$CERT" /etc/cert.pem
+	grep -q "/etc/key.pem" /proc/mounts || mount -o bind "$KEY" /etc/key.pem
+}
+
+restart_httpd() {
+	stopservice httpd
+	startservice httpd
+}
+
+setup_config
+setup_cert
+setup_bind
+restart_httpd
