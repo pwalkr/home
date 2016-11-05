@@ -1,15 +1,25 @@
 #!/bin/sh
 
-# Save this as an executable in /jffs/etc/config/*.startup
-# https://www.dd-wrt.com/wiki/index.php/Script_Execution
+# Self-installing ssl generation and startup script
+#
+# This script will set up a self-signed ssl certificate for use with the
+# webserver in HTTPS mode.
 
-MOUNT="/jffs"
+# Path to startup scripts on writable jffs mount
+SCRIPT_STARTUP="/jffs/etc/config/dd-wrt_ssl.startup"
 
-CNF="$MOUNT/openssl.cnf"
-KEY="$MOUNT/key.pem"
-CERT="$MOUNT/cert.pem"
+# Install ourselves if not there
+if [ ! -x "$SCRIPT_STARTUP" ]; then
+	mkdir -p "$(dirname "$SCRIPT_STARTUP")"
+	mv "$0" "$SCRIPT_STARTUP"
+fi
 
-setup_config() {
+CNF="/jffs/etc/openssl.cnf"
+KEY="/jffs/etc/key.pem"
+CERT="/jffs/etc/cert.pem"
+
+# Openssl requires a minimal config to run
+setup_openssl_cnf() {
 	if [ -f "$CNF" ]; then
 		# Nothing to do
 		return
@@ -56,7 +66,7 @@ restart_httpd() {
 	startservice httpd
 }
 
-setup_config
+setup_openssl_cnf
 setup_cert
 setup_bind
 restart_httpd
