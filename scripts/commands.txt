@@ -1,0 +1,30 @@
+Systemctl (sudo)
+
+	systemctl <status|start|stop|enable|disable> <service>.service
+
+	systemctl list-units [--all]
+	systemctl list-unit-files
+
+	systemctl list-dependencies <service>.service
+
+	# After making service file (unit) changes:
+	systemctl daemon-reload
+
+	# "runlevel"
+	systemctl get-default
+	systemctl set-default <target>.target
+
+	# "Switch run-levels"
+	systemctl isolate multi-user.target
+	systemctl isolate 
+
+NetworkManager:
+
+    nmcli general status
+
+    nmcli radio wifi [on|off]
+
+    nmcli device wifi list
+    nmcli device wifi rescan
+
+    nmcli device wifi connect <ssid> password <password>
