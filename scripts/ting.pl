@@ -3,62 +3,46 @@
 use strict;
 use warnings;
 
-chomp(my $PREFIX=`date --date "last month" +%Y-%m`);
+chomp(my $file_megabytes = `ls | grep "^megabytes" | tail -1`);
+chomp(my $file_messages = `ls | grep "^messages" | tail -1`);
+chomp(my $file_minutes = `ls | grep "^minutes" | tail -1`);
 
-sub process_megabytes {
+&process("Kilobytes", $file_megabytes, 2, 4);
+&process("Minutes", $file_minutes, 4, 11);
+&process("Messages", $file_messages, 3, -1);
+
+sub process {
+	my $label = shift;
 	my $file = shift;
+	my $index_name = shift;
+	my $index_value = shift;
 	my %results = ();
 
 	if (open my $mfh, $file) {
 		while (<$mfh>) {
+			$_ =~ s/"[^"]*"//g;
 			my @entry = split ",", $_;
 			# Skip header row
 			if ($entry[0] eq "Date") {
 				next;
 			}
-			if ($#entry gt 5) {
-				if (! exists $results{$entry[3]}) {
-					$results{$entry[3]} = 0;
+			if ($#entry > $index_name and $#entry > $index_value) {
+				if (! exists $results{$entry[$index_name]}) {
+					$results{$entry[$index_name]} = 0;
 				}
-				$results{$entry[3]} += $entry[5];
+				if ($index_value > 0) {
+					$results{$entry[$index_name]} += $entry[$index_value];
+				}
+				else {
+					$results{$entry[$index_name]} += 1;
+				}
 			}
 		}
 		close($mfh);
 	}
 
-	print "Data Usage (kilobytes)\n";
+	print "$label:\n";
 	foreach (keys %results) {
 		print "    $_: $results{$_}\n";
 	}
 }
-
-sub process_messages {
-	my $file = shift;
-	my %results = ();
-
-	if (open my $mfh, $file) {
-		while (<$mfh>) {
-			my @entry = split ",", $_;
-			# Skip header row
-			if ($entry[0] eq "Date") {
-				next;
-			}
-				printf "$#entry $_";
-			if ($#entry gt 4) {
-				if (! exists $results{$entry[4]}) {
-					$results{$entry[4]} = 0;
-				}
-				$results{$entry[4]} += 1;
-			}
-		}
-		close($mfh);
-	}
-
-	print "SMS Messages\n";
-	foreach (keys %results) {
-		print "    $_: $results{$_}\n";
-	}
-}
-
-&process_megabytes("megabytes3942947.csv");
-&process_messages("messages3942947.csv");
