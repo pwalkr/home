@@ -1,0 +1,26 @@
+#!/bin/bash
+
+FILE_BRIGHTNESS="/sys/class/backlight/intel_backlight/brightness"
+FILE_MAX_BRIGHTNESS="/sys/class/backlight/intel_backlight/max_brightness"
+
+BRIGHTNESS="$(cat "$FILE_BRIGHTNESS")"
+MAX_BRIGHTNESS="$(cat "$FILE_MAX_BRIGHTNESS")"
+
+INCREMENT="$((MAX_BRIGHTNESS/10))"
+
+case "$1" in
+	"+")
+		if [ "$((BRIGHTNESS+INCREMENT))" -lt "$MAX_BRIGHTNESS" ]; then
+			echo "$((BRIGHTNESS+INCREMENT))" > "$FILE_BRIGHTNESS"
+		else
+			echo "$MAX_BRIGHTNESS" > "$FILE_BRIGHTNESS"
+		fi;;
+	"-")
+		if [ "$((BRIGHTNESS-INCREMENT))" -gt "$INCREMENT" ]; then
+			echo "$((BRIGHTNESS-INCREMENT))" > "$FILE_BRIGHTNESS"
+		else
+			echo "$INCREMENT" > "$FILE_BRIGHTNESS"
+		fi;;
+esac
+
+echo "$(cat "$FILE_BRIGHTNESS")/$MAX_BRIGHTNESS"

@@ -1,9 +1,3 @@
-#
-# ~/.bash_profile
-#
+[ -f ~/.bashrc ] && source ~/.bashrc
 
-#psg
-
-if [ -f ~/.bashrc ]; then
-    source ~/.bashrc
-fi
+[ -z "$DISPLAY" -a "$(tty)" = "/dev/tty2" -a -f "~/.xinitrc" ] && exec startx

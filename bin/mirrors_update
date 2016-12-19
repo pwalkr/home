@@ -1,0 +1,23 @@
+#!/bin/bash
+
+MIRRORLIST="/etc/pacman.d/mirrorlist"
+MIRROR_TMP="$(mktemp)"
+MIRROR_RANK="$(mktemp ${MIRRORLIST}.XXX 2>/dev/null)"
+
+eeval() {
+	echo "$@"
+	eval "$@"
+}
+
+eeval "curl \"https://www.archlinux.org/mirrorlist/?country=US&use_mirror_status=on\"  > $MIRROR_TMP"
+eeval sed -i "s/^#Server/Server/" $MIRROR_TMP
+
+if [ -f "$MIRROR_RANK" ]; then
+	eeval "rankmirrors $MIRROR_TMP | grep -v Score > $MIRROR_RANK"
+	eeval mv --force $MIRROR_RANK $MIRRORLIST
+	eeval chmod 644 $MIRRORLIST
+else
+	eeval "rankmirrors $MIRROR_TMP | grep -v Score | head"
+fi
+
+rm --force "$MIRROR_TMP"

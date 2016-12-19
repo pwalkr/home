@@ -1,4 +1,3 @@
-"#psg
 set nocompatible           " Disable any vi-compatibility
 set ruler                  " Always show line/col# stats
 set number                 " Display line numbers

@@ -1,5 +1,3 @@
-!#psg
-
 ! black
 *color0: #000000
 *color8: #222222
@@ -35,12 +33,13 @@
 urxvt*saveLines: 32767
 urxvt*foreground: #f2f2f2
 urxvt*background: #101010
-urxvt*transparent: true
-urxvt*shading: 30
-urxvt*fading: 0
 urxvt*scrollBar: false
 urxvt*font: xft:Bitstream\ Vera\ Sans\ Mono:style=roman:pixelsize=13
 
-xterm*faceName: terminus:pixelsize=14
-xterm*foreground: #f2f2f2
-xterm*background: #101010
+! Transparency
+!
+!urxvt*background: rgba:0000/0000/0200/c800
+!urxvt*depth: 32
+urxvt*transparent: true
+urxvt*shading: 30
+urxvt*fading: 0

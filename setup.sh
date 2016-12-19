@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -a file_list=( 'bash_profile' 'bashrc' 'Xresources' 'vimrc' 'gitconfig' 'gitignore' 'pscfg' )
+declare -a file_list=( 'bash_profile' 'bashrc' 'Xdefaults' 'vimrc' 'gitconfig' 'gitignore' 'ps1' )
 
 if [ ! $HOME ]; then
     echo "Can't find your home!"
@@ -17,8 +17,7 @@ for f in ${file_list[@]}; do
 		srcmd5=$(md5sum $src 2>/dev/null | awk '{print $1}')
 		tgtmd5=$(md5sum $tgt 2>/dev/null | awk '{print $1}')
 		if [ $srcmd5 != $tgtmd5 ]; then
-			echo "    Updating $tgt"
-			cp $tgt "$HOME/${f}.old"
+			cp -v $tgt "$HOME/${f}.$(date +%y%m%d)"
 		fi
 	fi
 	cp $src $tgt
