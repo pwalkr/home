@@ -1,4 +1,24 @@
-# Vim temporary files
-*~
-*.swp
-*.swo
+# Volatile
+.bash_history
+.bash_logout
+.cache
+.config
+.gituser
+.gnome
+.lesshst
+.local
+.mono
+.pki
+.recently-used
+.viminfo
+.vim/.netrwhist
+.xmonad
+.Xauthority
+
+# Security
+.credentials
+.ssh
+
+# Home Folders
+Downloads
+work

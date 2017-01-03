@@ -1,0 +1,2 @@
+sh ~/.fehbg &
+exec xmonad

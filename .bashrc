@@ -10,11 +10,12 @@ export HISTCONTROL=ignoreboth
 export HISTSIZE=100000
 export SYSTEMD_EDITOR="vim"
 
+alias cpr='rsync --archive --progress'
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 alias ll='ls -al'
+alias please='sudo'
 alias vi='vim'
-alias cpr='rsync --archive --progress'
 
 if [ -d $HOME/.bash_completion.d ]; then
 	for f in $HOME/.bash_completion.d/*; do

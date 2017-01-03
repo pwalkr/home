@@ -1,112 +1,144 @@
 #!/bin/sh
 
-last_command="$1"
-last_command_code="$2"
+LAST_COMMAND="$1"
+LAST_COMMAND_CODE="$2"
 
-RED="$(tput setaf 1)"
-GREEN="$(tput setaf 2)"
-YELLOW="$(tput setaf 3)"
-CYAN="$(tput setaf 6)"
-WHITE="$(tput setaf 7)"
-DASH="$(printf "%b" "\xe2\x94\x80")"
+PROMPT=
+
+# Longer than a hyphen, provides continuous horizontal line
+DASH="$(echo -e "\xe2\x94\x80")"
+
+RED='\001\033[31m\002'
+GREEN='\001\033[32m\002'
+YELLOW='\001\033[33m\002'
+CYAN='\001\033[36m\002'
+
+CLEAR='\001\033[0m\002'
+BOLD='\001\033[1m\002'
 
 ACCENT="$CYAN"
 
-PROMPT="$ACCENT"
-
-user="$(whoami)"
-PROMPT+="$DASH( $user@$(hostname) )$DASH"
-
-PROMPT+="$DASH( $(date +%H:%M:%S) )$DASH"
-
-
-if which acpi &>/dev/null; then
-	acpi_b="$(acpi --battery)"
-	battery="$(echo "$acpi_b" | grep -o "[0-9]\+%")"
-	if [ "$battery" == "100%" ]; then
-		battery="${GREEN}${battery}${ACCENT}"
-	elif echo "$acpi_b" | grep --ignore-case --quiet discharging; then
-		battery="${RED}-${battery}${ACCENT}"
-	else
-		battery="${GREEN}+${battery}${ACCENT}"
+append_userhost() {
+	PROMPT+="$DASH( $USER@$(hostname) )$DASH"
+}
+append_timestamp() {
+	PROMPT+="$DASH( $(date +%H:%M:%S) )$DASH"
+}
+append_battery(){
+	local acpi_b=
+	local percent=
+	if which acpi &>/dev/null; then
+		PROMPT+="$DASH("
+		acpi_b="$(acpi --battery)"
+		percent="$(echo "$acpi_b" | grep -o "[0-9]\+%")"
+		if [ "$percent" == "100%" ]; then
+			PROMPT+="$GREEN $percent "
+		elif echo "$acpi_b" | grep --ignore-case --quiet discharging; then
+			PROMPT+="$RED -$percent "
+		else
+			PROMPT+="$GREEN +$percent "
+		fi
+		PROMPT+="$ACCENT)$DASH"
 	fi
-	PROMPT+="$DASH( $battery )$DASH"
-fi
+}
+append_git() {
+	local ghash=
+	local upstream=
+	local uhash=
+	local branch=
+	ghash="$(git rev-parse HEAD 2>/dev/null)"
+	if [ "$ghash" ]; then
+		PROMPT+="$DASH("
 
-ghash="$(git rev-parse HEAD 2>/dev/null)"
-if [ "$ghash" ]; then
-	PROMPT+="$DASH( "
+		if [ "$(git diff --cached --name-only 2>/dev/null)" ]; then
+			PROMPT+="$YELLOW "
+		elif [ "$(git diff --name-only 2>/dev/null)" ]; then
+			PROMPT+="$RED "
+		else
+			PROMPT+="$GREEN "
+		fi
 
-	if [ "$(git diff --cached --name-only 2>/dev/null)" ]; then
-		PROMPT+="$YELLOW"
-	elif [ "$(git diff --name-only 2>/dev/null)" ]; then
-		PROMPT+="$RED"
-	else
-		PROMPT+="$GREEN"
-	fi
-
-	# Ahead, behind or out of sync with upstream
-	upstream="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"
-	if [ "$upstream" ]; then
-		uhash="$(git rev-parse $upstream)"
-		if [ "$ghash" != "$uhash" ]; then
-			if [ "$(git rev-list HEAD | grep $uhash)" ]; then
-				PROMPT+="+"
-			elif [ "$(git rev-list $upstream | grep $ghash)" ]; then
-				PROMPT+="-"
-			else
-				PROMPT+="~"
+		# Ahead, behind or out of sync with upstream
+		upstream="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"
+		if [ "$upstream" ]; then
+			uhash="$(git rev-parse $upstream)"
+			if [ "$ghash" != "$uhash" ]; then
+				if [ "$(git rev-list HEAD | grep $uhash)" ]; then
+					PROMPT+="+"
+				elif [ "$(git rev-list $upstream | grep $ghash)" ]; then
+					PROMPT+="-"
+				else
+					PROMPT+="~"
+				fi
 			fi
 		fi
+
+		branch="$(git symbolic-ref --short HEAD 2>/dev/null)"
+		if [ "$branch" ]; then
+			PROMPT+="$branch"
+		else
+			PROMPT+="${ghash:0:7}"
+		fi
+
+		# New un-tracked files
+		if [ "$(git ls-files --other --exclude-standard 2>/dev/null)" ]; then
+			PROMPT+="*"
+		fi
+
+		PROMPT+="$ACCENT )$DASH"
 	fi
-
-	branch="$(git symbolic-ref --short HEAD 2>/dev/null)"
-	if [ "$branch" ]; then
-		PROMPT+="$branch"
-	else
-		PROMPT+="${ghash:0:7}"
+}
+append_command() {
+	local cols=$(tput cols)
+	local index_left=
+	local index_right=
+	local last_command="$LAST_COMMAND"
+	#local length_printable="$(echo -e "$PROMPT" | tr -dc '[[:print:]]')"
+	#echo -e "$PROMPT" | tr -dc '\40-\176'
+	#echo "$PROMPT" | sed 's/\\001.\{,10\}\\002//g'
+	# Strip out anything between \[ and \] (\001 and \002)
+	local length_printable="$(echo "$PROMPT" | sed 's/\\001.\{,10\}\\002//g')"
+	length_printable=${#length_printable}
+	local length_truncated=$((cols - length_printable - 6))
+	if [ "${#LAST_COMMAND}" -gt  "$length_truncated" ]; then
+		index_left="$((length_truncated / 2))"
+		index_right="$((${#LAST_COMMAND} - index_left + 1))"
+		index_left="$((index_left - 2))"
+		last_command="${LAST_COMMAND:0:index_left}...${LAST_COMMAND:index_right}"
 	fi
-
-	# New un-tracked files
-	if [ "$(git ls-files --other --exclude-standard 2>/dev/null)" ]; then
-		PROMPT+="*"
+	PROMPT+="$DASH( $last_command )$DASH"
+}
+append_path() {
+	local path="$(pwd)"
+	local pl=
+	local pi=
+	if [ "${#path}" -gt 20 ]; then
+		pl=${#path}
+		pi=$((pl-17))
+		path="...${path:pi}"
 	fi
+	PROMPT+="($path)"
+}
 
-	PROMPT+="$ACCENT )$DASH"
-fi
+PROMPT="$ACCENT"
+append_userhost
+append_timestamp
+append_battery
+append_git
+append_command
+PROMPT+='\n'
+append_path
 
-length_printable="$(tr -dc '[[:print:]]' <<< "$PROMPT")"
-length_printable=${#length_printable}
-cols=$(tput cols)
-length_truncated=$((cols - length_printable - 6))
-if [ "${#last_command}" -gt  "$length_truncated" ]; then
-	index_left="$((length_truncated / 2))"
-	index_right="$((${#last_command} - index_left + 1))"
-	index_left="$((index_left - 2))"
-	last_command="${last_command:0:index_left}...${last_command:index_right}"
-fi
-PROMPT+="$DASH( $last_command )$DASH"
 
-PROMPT+="\n"
-
-path="$(pwd)"
-if [ "${#path}" -gt 20 ]; then
-	pl=${#path}
-	pi=$((pl-23))
-	path="...${path:pi}"
-fi
-PROMPT+="($path)"
-
-if [ "$last_command_code" = "0" ]; then
-	PROMPT+="$GREEN"
+if [ "$LAST_COMMAND_CODE" = "0" ]; then
+	PROMPT+="$BOLD$GREEN"
 else
-	PROMPT+="$RED"
+	PROMPT+="$BOLD$RED"
 fi
-if [ "$user" = "root" ]; then
+if [ "$USER" = "root" ]; then
 	PROMPT+="#"
 else
 	PROMPT+="$"
 fi
-PROMPT+="$WHITE"
 
-printf "%b " "$PROMPT"
+echo -e "$PROMPT$CLEAR "
