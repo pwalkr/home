@@ -16,7 +16,7 @@ CYAN='\001\033[36m\002'
 CLEAR='\001\033[0m\002'
 BOLD='\001\033[1m\002'
 
-ACCENT="$CYAN"
+ACCENT="$BOLD$CYAN"
 
 append_userhost() {
 	PROMPT+="$DASH( $USER@$(hostname) )$DASH"
