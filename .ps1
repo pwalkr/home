@@ -19,7 +19,11 @@ BOLD='\001\033[1m\002'
 ACCENT="$BOLD$CYAN"
 
 append_userhost() {
-	PROMPT+="$DASH( $USER@$(hostname) )$DASH"
+	if [ -z "$SSH_CLIENT" -a -z "$SSH_TTY" ]; then
+		PROMPT+="$DASH( $USER@$(hostname) )$DASH"
+	else
+		PROMPT+="$DASH( $USER@$YELLOW$(hostname)$ACCENT )$DASH"
+	fi
 }
 append_timestamp() {
 	PROMPT+="$DASH( $(date +%H:%M:%S) )$DASH"
