@@ -40,7 +40,7 @@ shadow=".rsync_shadow"
 
 rsync "${flags[@]}" "$sauce"/ "$target" | sed "s/\\${shadow}\///" | sed \
 	-e 's/^>f+++++++++ /*creating   /' \
-	-e 's/^>f..t...... /*updating   /' \
+	-e 's/^>f\.\.t\.\.\.\.\.\. /*updating   /' \
 	-e 's/^hf+++++++++ \(.\+\) => \(.\+\)$/*renaming   \2 => \1/'
 
 rsync -a --delete --link-dest="$sauce" --exclude="/$shadow" "$sauce"/ "$sauce/$shadow"
