@@ -65,11 +65,11 @@ append_git() {
 		# Ahead, behind or out of sync with upstream
 		upstream="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"
 		if [ "$upstream" ]; then
-			uhash="$(git rev-parse $upstream)"
+			uhash="$(git rev-parse $upstream 2>/dev/null)"
 			if [ "$ghash" != "$uhash" ]; then
-				if [ "$(git rev-list HEAD | grep $uhash)" ]; then
+				if [ "$(git rev-list HEAD 2>/dev/null | grep $uhash)" ]; then
 					PROMPT+="+"
-				elif [ "$(git rev-list $upstream | grep $ghash)" ]; then
+				elif [ "$(git rev-list $upstream 2>/dev/null | grep $ghash)" ]; then
 					PROMPT+="-"
 				else
 					PROMPT+="~"
