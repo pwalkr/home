@@ -16,7 +16,10 @@ CYAN='\001\033[36m\002'
 CLEAR='\001\033[0m\002'
 BOLD='\001\033[1m\002'
 
-ACCENT="$BOLD$CYAN"
+ACCENT="$CYAN"
+if [ "$USER" == root ]; then
+	ACCENT="$RED"
+fi
 
 append_userhost() {
 	if [ -z "$SSH_CLIENT" -a -z "$SSH_TTY" ]; then
@@ -124,13 +127,15 @@ append_path() {
 	PROMPT+="($path)"
 }
 
-PROMPT="$ACCENT"
-append_userhost
-append_timestamp
-append_battery
-append_git
-append_command
-PROMPT+='\n'
+PROMPT="$BOLD$ACCENT"
+if [ "$USER" != root ]; then
+	append_userhost
+	append_timestamp
+	append_battery
+	append_git
+	append_command
+	PROMPT+='\n'
+fi
 append_path
 
 
