@@ -6,7 +6,7 @@ FILE_MAX_BRIGHTNESS="/sys/class/backlight/intel_backlight/max_brightness"
 BRIGHTNESS="$(cat "$FILE_BRIGHTNESS")"
 MAX_BRIGHTNESS="$(cat "$FILE_MAX_BRIGHTNESS")"
 
-INCREMENT="$((MAX_BRIGHTNESS/10))"
+INCREMENT="$((MAX_BRIGHTNESS/20))"
 
 case "$1" in
 	"+")
