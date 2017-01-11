@@ -39,7 +39,9 @@ fi
 shadow=".rsync_shadow"
 
 rsync "${flags[@]}" "$sauce"/ "$target" | sed "s/\\${shadow}\///" | sed \
+	-e 's/^cd+++++++++ /*creating   /' \
 	-e 's/^>f+++++++++ /*creating   /' \
+	-e 's/^cd\.\.t\.\.\.\.\.\. /*updating   /' \
 	-e 's/^>f\.\.t\.\.\.\.\.\. /*updating   /' \
 	-e 's/^hf+++++++++ \(.\+\) => \(.\+\)$/*renaming   \2 => \1/'
 
