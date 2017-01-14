@@ -38,12 +38,38 @@ fi
 # Used to keep track of renames
 shadow=".rsync_shadow"
 
-rsync "${flags[@]}" "$sauce"/ "$target" | sed "s/\\${shadow}\///" | sed \
-	-e 's/^cd+++++++++ /*creating   /' \
-	-e 's/^>f+++++++++ /*creating   /' \
-	-e 's/^cd\.\.t\.\.\.\.\.\. /*updating   /' \
-	-e 's/^>f\.\.t\.\.\.\.\.\. /*updating   /' \
-	-e 's/^hf+++++++++ \(.\+\) => \(.\+\)$/*renaming   \2 => \1/'
+reword() {
+	local line="$1"
+	# Strip ".rsync_shadow"
+	local change="$(awk '{print $1}' <<< "$line")"
+	local trim="$(sed "s/\\${shadow}\///" <<< "$line")"
+	local operand="$(sed 's/^[^ ]\+ \+//' <<< "$trim")"
+
+	case "$change" in
+		'cd+++++++++'|'>f+++++++++')
+			echo "*creating   $operand"
+		;;
+		'cd..t......'|'>f..t......')
+			echo "*updating   $operand"
+		;;
+		'hf+++++++++')
+			local src="$(awk -F' => ' '{print $2}' <<< "$operand")"
+			local tgt="$(awk -F' => ' '{print $1}' <<< "$operand")"
+			if [ "$src" != "$tgt" ]; then
+				echo "*renaming   $src => $tgt"
+			else
+				echo "$line"
+			fi
+		;;
+		*)
+			echo "$line"
+		;;
+	esac
+}
+
+while read -r line; do
+	 reword "$line"
+done < <(rsync "${flags[@]}" "$sauce"/ "$target")
 
 rsync -a --delete --link-dest="$sauce" --exclude="/$shadow" "$sauce"/ "$sauce/$shadow"
 rsync -a --delete --link-dest="$target" --exclude="/$shadow" "$target"/ "$target/$shadow"
