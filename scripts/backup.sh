@@ -45,11 +45,13 @@ reword() {
 	local trim="$(sed "s/\\${shadow}\///" <<< "$line")"
 	local operand="$(sed 's/^[^ ]\+ \+//' <<< "$trim")"
 
+	echo "$line"
+
 	case "$change" in
 		'cd+++++++++'|'>f+++++++++')
 			echo "*creating   $operand"
 		;;
-		'cd..t......'|'>f..t......')
+		'>f..t......')
 			echo "*updating   $operand"
 		;;
 		'hf+++++++++')
@@ -57,12 +59,7 @@ reword() {
 			local tgt="$(awk -F' => ' '{print $1}' <<< "$operand")"
 			if [ "$src" != "$tgt" ]; then
 				echo "*renaming   $src => $tgt"
-			else
-				echo "$line"
 			fi
-		;;
-		*)
-			echo "$line"
 		;;
 	esac
 }
