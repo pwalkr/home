@@ -69,7 +69,10 @@ append_git() {
 		upstream="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"
 		if [ "$upstream" ]; then
 			uhash="$(git rev-parse $upstream 2>/dev/null)"
-			if [ "$ghash" != "$uhash" ]; then
+			if [ "$uhash" = "@{u}" ]; then
+				# remote-tracking branch has been removed
+				PROMPT+="!"
+			elif [ "$ghash" != "$uhash" ]; then
 				if [ "$(git rev-list HEAD 2>/dev/null | grep $uhash)" ]; then
 					PROMPT+="+"
 				elif [ "$(git rev-list $upstream 2>/dev/null | grep $ghash)" ]; then
