@@ -1,4 +1,6 @@
 [alias]
+	hold = branch hold
+	message = log -1 --format=%B
     tree = log --graph --pretty=oneline --abbrev-commit --decorate
     wip = commit -am WIP
 [color]
