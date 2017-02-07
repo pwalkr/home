@@ -10,6 +10,7 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+local vicious = require("vicious")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -84,6 +85,16 @@ mytasklist.buttons = awful.util.table.join(
 	end)
 )
 mytextclock = awful.widget.textclock()
+-- {{{ Battery state
+-- Initialize widget
+batwidget = awful.widget.progressbar()
+batwidget:set_width(8)
+batwidget:set_height(14)
+batwidget:set_vertical(true)
+batwidget:set_background_color("#000000")
+batwidget:set_border_color(nil)
+batwidget:set_color("#00bfff")
+vicious.register(batwidget, vicious.widgets.bat, "$2", 120, "BAT0")
 
 for s = 1, screen.count() do
 	-- Create a promptbox for each screen
@@ -115,7 +126,10 @@ for s = 1, screen.count() do
 
 	-- Widgets that are aligned to the right
 	local right_layout = wibox.layout.fixed.horizontal()
-	if s == 1 then right_layout:add(wibox.widget.systray()) end
+	if s == 1 then
+		right_layout:add(wibox.widget.systray())
+		right_layout:add(batwidget)
+	end
 	right_layout:add(mytextclock)
 	right_layout:add(mylayoutbox[s])
 
@@ -170,8 +184,6 @@ globalkeys = awful.util.table.join(
 
 clientkeys = awful.util.table.join(
 	awful.key({ modkey }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-	-- Toggle "window visible on all tags"
-	awful.key({ modkey }, "s",                 function (c) c.sticky = not c.sticky  end),
 	awful.key({ modkey, "Shift"   }, "k",      function (c) c:kill() end)
 )
 
