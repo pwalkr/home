@@ -1,6 +1,6 @@
 # Set up screens
 case "$(hostname)" in
-	"tassadar")
+	"tassadar"|"zeratul")
 		sh ~/.fehbg &
 
 		exec xmonad
