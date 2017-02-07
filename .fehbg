@@ -1,2 +1,2 @@
 #!/bin/sh
-feh  --bg-scale '/home/strayguin/Pictures/archlinux_os_black_blue_34211_1920x1080.jpg' 
+feh --no-fehbg --randomize --bg-fill ~/.wallpaper/*
