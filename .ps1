@@ -73,9 +73,9 @@ append_git() {
 				# remote-tracking branch has been removed
 				PROMPT+="!"
 			elif [ "$ghash" != "$uhash" ]; then
-				if [ "$(git rev-list HEAD 2>/dev/null | grep $uhash)" ]; then
+				if git rev-list HEAD 2>/dev/null | grep --quiet --max-count=1 $uhash; then
 					PROMPT+="+"
-				elif [ "$(git rev-list $upstream 2>/dev/null | grep $ghash)" ]; then
+				elif git rev-list $upstream 2>/dev/null | grep --quiet --max-count=1 $ghash; then
 					PROMPT+="-"
 				else
 					PROMPT+="~"
