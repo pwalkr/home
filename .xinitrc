@@ -2,7 +2,7 @@
 case "$(hostname)" in
 	"tassadar"|"zeratul")
 		sh ~/.fehbg &
-		xscreensaver &
+		xscreensaver -no-splash &
 
 		exec xmonad
 	;;
