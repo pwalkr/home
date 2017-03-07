@@ -1,5 +1,6 @@
 import XMonad
 import XMonad.Layout.Grid
+import XMonad.ManageHook
 import XMonad.Prompt
 import XMonad.Prompt.Shell(shellPrompt)
 import XMonad.Util.EZConfig(additionalKeysP)
@@ -8,6 +9,9 @@ main = xmonad $ defaultConfig
 	{ borderWidth = 2
 	, focusedBorderColor = "#dddddd"
 	, layoutHook = Grid
+	, manageHook = composeAll
+		[ className =? "VirtualBox"--> doFloat
+		]
 	, modMask = mod4Mask
 	, normalBorderColor = "#000000"
 	, terminal = "urxvt"
