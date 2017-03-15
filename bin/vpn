@@ -1,0 +1,38 @@
+#!/bin/bash
+
+VPNDIR="$HOME/.vpn"
+
+OVPN="$(ls "$VPNDIR" | grep --max-count=1 "\.ovpn$")"
+
+if [ -z "$OVPN" ]; then
+	echo "Could not find .ovpn file"
+	exit 1
+fi
+
+case "$1" in
+	start)
+		upcmd="$(mktemp)"
+
+		echo "Generating temporary up cmd: $upcmd"
+		echo
+		cat <<-'EOF' | tee "$upcmd" | sed "s;^;    ;"
+			#!/bin/bash
+			dhcpcd $1
+		EOF
+		echo
+
+		chmod +x "$upcmd"
+
+		(sleep 10; rm -f $upcmd) &
+
+		echo "sudo openvpn --script-security 2 --route-up $upcmd --config $VPNDIR/$OVPN"
+		      sudo openvpn --script-security 2 --route-up $upcmd --config $VPNDIR/$OVPN
+	;;
+	stop)
+		echo "sudo killall openvpn"
+		      sudo killall openvpn
+	;;
+	*)
+		echo "Usage: vpn <start|stop>"
+	;;
+esac
