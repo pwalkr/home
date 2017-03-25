@@ -12,7 +12,8 @@ main = xmonad $ defaultConfig
 	, focusFollowsMouse = True
 	, layoutHook = Tall 1 (3/100) (1/2) ||| Grid ||| Full
 	, manageHook = composeAll
-		[ className =? "VirtualBox"--> doFloat
+		[ className =? "KeePass2"--> doFloat
+		, className =? "VirtualBox"--> doFloat
 		]
 	, modMask = mod4Mask
 	, normalBorderColor = "#000000"
