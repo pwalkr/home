@@ -25,6 +25,7 @@ main = xmonad $ defaultConfig
 	, ("M-S-l", spawn "xscreensaver-command --lock")
 	, ("M-S-r", spawn "xmonad --recompile && xmonad --restart")
 	, ("M-<Space>", sendMessage NextLayout)
+	, ("<Print>", spawn "scrot")
 	, ("<XF86AudioRaiseVolume>", spawn "amixer sset Master 3%+")
 	, ("<XF86AudioLowerVolume>", spawn "amixer sset Master 3%-")
 	, ("<XF86AudioMute>",        spawn "amixer sset Master toggle")
