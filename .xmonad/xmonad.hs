@@ -13,6 +13,7 @@ main = xmonad $ defaultConfig
 	, layoutHook = Tall 1 (3/100) (1/2) ||| Grid ||| Full
 	, manageHook = composeAll
 		[ className =? "KeePass2"--> doFloat
+		, className =? "processing-app-Base"--> doFloat -- Java-based Arduino
 		, className =? "VirtualBox"--> doFloat
 		]
 	, modMask = mod4Mask
