@@ -91,7 +91,7 @@ append_git() {
 		fi
 
 		# New un-tracked files
-		if [ "$(git ls-files --other --exclude-standard 2>/dev/null)" ]; then
+		if git status --porcelain 2>/dev/null | grep --quiet "^?? "; then
 			PROMPT+="*"
 		fi
 
