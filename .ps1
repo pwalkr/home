@@ -130,7 +130,7 @@ append_path() {
 	PROMPT+="($path)"
 }
 
-PROMPT="$BOLD$ACCENT"
+PROMPT="\n$BOLD$ACCENT"
 if [ "$USER" != root ]; then
 	append_userhost
 	append_timestamp
