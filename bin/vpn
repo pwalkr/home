@@ -13,19 +13,18 @@ case "$1" in
 	start)
 		upcmd="$(mktemp)"
 
-		echo "Generating temporary up cmd: $upcmd"
-		echo
+		echo "Generating route-up:"
 		cat <<-'EOF' | tee "$upcmd" | sed "s;^;    ;"
 			#!/bin/bash
 			dhcpcd $1
 		EOF
-		echo
 
 		chmod +x "$upcmd"
 
-		(sleep 10; rm -f $upcmd) &
-
 		echo "sudo openvpn --script-security 2 --route-up $upcmd --config $VPNDIR/$OVPN"
+		# Load sudo before backgrounding route-up removal
+		sudo echo &>/dev/null
+		(sleep 10; rm -f $upcmd) &
 		      sudo openvpn --script-security 2 --route-up $upcmd --config $VPNDIR/$OVPN
 	;;
 	stop)
