@@ -36,7 +36,7 @@ append_battery(){
 	local percent=
 	if which acpi &>/dev/null; then
 		PROMPT+="$DASH("
-		acpi_b="$(acpi --battery)"
+		acpi_b="$(acpi --battery | head -1)"
 		percent="$(echo "$acpi_b" | grep -o "[0-9]\+%")"
 		if [ "$percent" == "100%" ]; then
 			PROMPT+="$GREEN $percent "
