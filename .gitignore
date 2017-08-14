@@ -1,3 +1,8 @@
+# Typical temporary files
+*~
+*.swp
+*.swo
+
 # Volatile
 .bash_history
 .bash_logout
