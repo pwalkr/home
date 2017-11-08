@@ -26,7 +26,7 @@ while getopts "hum:" opt; do
 			;;
 		m)
 			if [ -d "$OPTARG" ]; then
-				VOLUME_FLAG="--volume $(cd "$OPTARG"; pwd):/mnt"
+				VOLUME_FLAG="--volume $(cd "$OPTARG"; pwd):/mnt --workdir /mnt"
 			else
 				echo "$OPTARG is not a valid directory"
 				exit 1
