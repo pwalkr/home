@@ -11,6 +11,6 @@ case "$1" in
 		usage
 		;;
 	*)
-		ssh "root@$1" "nvram show" | sort > "$(date +%Y-%m-%d)_$1.nvram"
+		ssh "root@$1" "nvram show" > "$(date +%Y-%m-%d)_$1.nvram"
 		;;
 esac
