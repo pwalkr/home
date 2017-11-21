@@ -21,7 +21,7 @@ main = xmonad $ defaultConfig
 	, terminal = "urxvt"
 	}
 	`additionalKeysP`
-	[ ("M-b", spawn "chromium")
+	[ ("M-S-b", spawn "chromium")
 	, ("M-r", shellPrompt defaultXPConfig)
 	, ("M-S-l", spawn "xscreensaver-command --lock")
 	, ("M-S-r", spawn "xmonad --recompile && xmonad --restart")
