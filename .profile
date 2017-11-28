@@ -1,2 +1,3 @@
-xscreensaver -no-splash &
-~/.fehbg
+.  ~/.bashrc
+
+numlockx on
