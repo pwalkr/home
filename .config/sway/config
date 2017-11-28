@@ -54,6 +54,10 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     # mouse button for dragging.
     floating_modifier $mod normal
 
+    # No title bar/border for windows
+    new_window pixel 2
+    new_float pixel 2
+
     # reload the configuration file
     bindsym $mod+Shift+c reload
 
@@ -140,6 +144,7 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
+    status_command i3status
     position top
     colors {
         statusline #ffffff
