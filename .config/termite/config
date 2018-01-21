@@ -3,7 +3,7 @@
 #audible_bell = false
 #clickable_url = true
 #dynamic_title = true
-font = Monospace 9
+font = Monospace 10
 #fullscreen = true
 #geometry = 640x480
 #icon_name = terminal
@@ -36,7 +36,7 @@ scrollback_lines = 10000
 #size_hints = false
 
 # "off", "left" or "right"
-#scrollbar = off
+scrollbar = right
 
 [colors]
 # If both of these are unset, cursor falls back to the foreground color,
@@ -48,28 +48,42 @@ scrollback_lines = 10000
 #foreground_bold = #ffffff
 #background = #3f3f3f
 
-# 20% background transparency (requires a compositor)
-#background = rgba(63, 63, 63, 0.8)
+# background transparency (requires a compositor)
+background = rgba(0, 0, 0, 0.9)
 
 # If unset, will reverse foreground and background
 highlight = #2f2f2f
 
-# Colors from color0 to color254 can be set
-color0 = #3f3f3f
-color1 = #705050
-color2 = #60b48a
-color3 = #dfaf8f
-color4 = #506070
-color5 = #dc8cc3
-color6 = #8cd0d3
-color7 = #dcdccc
-color8 = #709080
-color9 = #dca3a3
-color10 = #c3bf9f
-color11 = #f0dfaf
-color12 = #94bff3
-color13 = #ec93d3
-color14 = #93e0e3
+# Black
+color0 = #000000
+color8 = #222222
+
+# Red
+color1 = #bb0000
+color9 = #dd2222
+
+# Green
+color2 =  #00bb00
+color10 = #22dd22
+
+# Yellow
+color3  = #bbbb00
+color11 = #dddd22
+
+# Blue
+color4  = #4444dd
+color12 = #5555ff
+
+# Magenta
+color5  = #bb00bb
+color13 = #dd22dd
+
+# Cyan
+color6  = #00bbbb
+color14 = #22dddd
+
+# White
+color7  = #eeeeee
 color15 = #ffffff
 
 [hints]
