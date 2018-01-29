@@ -87,7 +87,12 @@ append_git() {
 		if [ "$branch" ]; then
 			PROMPT+="$branch"
 		else
-			PROMPT+="${ghash:0:7}"
+			branch="$(git tag --points-at HEAD | tail -1)"
+			if [ "$branch" ]; then
+				PROMPT+="<$branch>"
+			else
+				PROMPT+="${ghash:0:7}"
+			fi
 		fi
 
 		# New un-tracked files

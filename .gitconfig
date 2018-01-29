@@ -1,4 +1,5 @@
 [alias]
+    detach = "!git checkout `git rev-parse HEAD`"
     hold = branch hold
     message = log -1 --format=%B
     orphans = "!git tree `git reflog --format=%h`"
@@ -18,3 +19,5 @@
     path = .gituser
 [pull]
     ff = only
+[advice]
+    detachedHead = false
