@@ -6,7 +6,7 @@ mkdir -p log
 
 echo "$@" > log/last.log
 
-time (eval "$@") 2>&1 | tee -a log/last.log
+{ time eval "$@"; } 2>&1 | tee -a log/last.log
 ecode=$?
 
 cp log/last.log log/$(date +%Y-%m-%d_%H:%M:%S).log
