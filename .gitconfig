@@ -1,5 +1,5 @@
 [alias]
-    detach = "!git checkout `git rev-parse HEAD`"
+    detach = "!b=`git rev-parse --abbrev-ref HEAD`; git checkout `git rev-parse HEAD` && git branch -d \"$b\""
     hold = branch hold
     message = log -1 --format=%B
     orphans = "!git tree `git reflog --format=%h`"
