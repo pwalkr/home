@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ ! -f "$1" ]; then
+	echo "$(basename "$0") <private key>"
+	exit
+fi
+
+echo "openssl pkey -in \"$1\" -pubout -outform DER | openssl md5 -c"
+      openssl pkey -in  "$1"  -pubout -outform DER | openssl md5 -c
