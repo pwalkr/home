@@ -3,7 +3,7 @@ import XMonad.Layout
 import XMonad.Layout.Grid
 import XMonad.ManageHook
 import XMonad.Prompt
-import XMonad.Prompt.Shell(shellPrompt)
+import XMonad.Prompt.Shell
 import XMonad.Util.EZConfig(additionalKeysP)
 
 main = xmonad $ defaultConfig
@@ -22,7 +22,7 @@ main = xmonad $ defaultConfig
 	}
 	`additionalKeysP`
 	[ ("M-S-b", spawn "chromium")
-	, ("M-r", shellPrompt defaultXPConfig)
+	, ("M-r", shellPrompt def)
 	, ("M-S-l", spawn "xscreensaver-command --lock")
 	, ("M-S-r", spawn "xmonad --recompile && xmonad --restart")
 	, ("M-<Space>", sendMessage NextLayout)
