@@ -9,7 +9,7 @@ set $term urxvt
 # Your preferred application launcher
 set $menu dmenu_run
 # Preferred internet browser
-set $browser chromium
+set $browser firefox
 
 ### Output configuration
 #

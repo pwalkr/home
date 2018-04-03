@@ -3,7 +3,7 @@
 
 PS1='$(s=$?; l="$(history 1)"; $HOME/.ps1 "${l:7}" "$s")'
 
-export BROWSER="chromium"
+export BROWSER="firefox"
 export EDITOR=vim
 export FILEBROWSER="thunar"
 export HISTCONTROL=ignoreboth
