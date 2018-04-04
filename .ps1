@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Call this in your PS1 prompt variable via: (~/.bashrc)
+# PS1='$(s=$?; h="$(history 1)"; $HOME/.ps1 "${h:7}" "$s")'
+
 LAST_COMMAND="$1"
 LAST_COMMAND_CODE="$2"
 
