@@ -6,7 +6,8 @@ LAST_COMMAND_CODE="$2"
 PROMPT=
 
 # Longer than a hyphen, provides continuous horizontal line
-DASH="$(echo -e "\xe2\x94\x80")"
+#DASH="$(echo -e "\xe2\x94\x80")"
+DASH="-"
 
 RED='\001\033[31m\002'
 GREEN='\001\033[32m\002'
