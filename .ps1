@@ -35,25 +35,29 @@ append_timestamp() {
 append_battery(){
 	local acpi_b=
 	local percent=
-	if which acpi &>/dev/null; then
-		PROMPT+="$DASH("
-		acpi_b="$(acpi --battery | head -1)"
-		percent="$(echo "$acpi_b" | grep -o "[0-9]\+%")"
-		if [ "$percent" == "100%" ]; then
-			PROMPT+="$GREEN $percent "
-		elif echo "$acpi_b" | grep --ignore-case --quiet discharging; then
-			PROMPT+="$RED -$percent "
-		else
-			PROMPT+="$GREEN +$percent "
-		fi
-		PROMPT+="$ACCENT)$DASH"
+	if ! which acpi &>/dev/null; then
+		return
 	fi
+	PROMPT+="$DASH("
+	acpi_b="$(acpi --battery | head -1)"
+	percent="$(echo "$acpi_b" | grep -o "[0-9]\+%")"
+	if [ "$percent" == "100%" ]; then
+		PROMPT+="$GREEN $percent "
+	elif echo "$acpi_b" | grep --ignore-case --quiet discharging; then
+		PROMPT+="$RED -$percent "
+	else
+		PROMPT+="$GREEN +$percent "
+	fi
+	PROMPT+="$ACCENT)$DASH"
 }
 append_git() {
 	local ghash=
 	local upstream=
 	local uhash=
 	local branch=
+	if ! which git &>/dev/null; then
+		return
+	fi
 	ghash="$(git rev-parse HEAD 2>/dev/null)"
 	if [ "$ghash" ]; then
 		PROMPT+="$DASH("
