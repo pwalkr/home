@@ -137,14 +137,12 @@ append_path() {
 }
 
 PROMPT="\n$BOLD$ACCENT"
-if [ "$USER" != root ]; then
-	append_userhost
-	append_timestamp
-	append_battery
-	append_git
-	append_command
-	PROMPT+='\n'
-fi
+append_userhost
+append_timestamp
+append_battery
+append_git
+append_command
+PROMPT+='\n'
 append_path
 
 
