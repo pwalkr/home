@@ -18,56 +18,56 @@ CLEAR='\001\033[0m\002'
 BOLD='\001\033[1m\002'
 
 ACCENT="$CYAN"
-if [ "$USER" == root ]; then
+if [ "$USER" = root ]; then
 	ACCENT="$RED"
 fi
 
 append_userhost() {
 	if [ -z "$SSH_CLIENT" -a -z "$SSH_TTY" ]; then
-		PROMPT+="$DASH( $USER@$(hostname) )$DASH"
+		PROMPT="$PROMPT$DASH( $USER@$(hostname) )$DASH"
 	else
-		PROMPT+="$DASH( $USER@$YELLOW$(hostname)$ACCENT )$DASH"
+		PROMPT="$PROMPT$DASH( $USER@$YELLOW$(hostname)$ACCENT )$DASH"
 	fi
 }
 append_timestamp() {
-	PROMPT+="$DASH( $(date +%H:%M:%S) )$DASH"
+	PROMPT="$PROMPT$DASH( $(date +%H:%M:%S) )$DASH"
 }
 append_battery(){
 	local acpi_b=
 	local percent=
-	if ! which acpi &>/dev/null; then
+	if ! which acpi >/dev/null 2>&1; then
 		return
 	fi
-	PROMPT+="$DASH("
+	PROMPT="$PROMPT$DASH("
 	acpi_b="$(acpi --battery | head -1)"
 	percent="$(echo "$acpi_b" | grep -o "[0-9]\+%")"
-	if [ "$percent" == "100%" ]; then
-		PROMPT+="$GREEN $percent "
+	if [ "$percent" = "100%" ]; then
+		PROMPT="$PROMPT$GREEN $percent "
 	elif echo "$acpi_b" | grep --ignore-case --quiet discharging; then
-		PROMPT+="$RED -$percent "
+		PROMPT="$PROMPT$RED -$percent "
 	else
-		PROMPT+="$GREEN +$percent "
+		PROMPT="$PROMPT$GREEN +$percent "
 	fi
-	PROMPT+="$ACCENT)$DASH"
+	PROMPT="$PROMPT$ACCENT)$DASH"
 }
 append_git() {
 	local ghash=
 	local upstream=
 	local uhash=
 	local branch=
-	if ! which git &>/dev/null; then
+	if ! which git >/dev/null 2>&1; then
 		return
 	fi
 	ghash="$(git rev-parse HEAD 2>/dev/null)"
 	if [ "$ghash" ]; then
-		PROMPT+="$DASH("
+		PROMPT="$PROMPT$DASH("
 
 		if [ "$(git diff --cached --name-only 2>/dev/null)" ]; then
-			PROMPT+="$YELLOW "
+			PROMPT="$PROMPT$YELLOW "
 		elif [ "$(git diff --name-only 2>/dev/null)" ]; then
-			PROMPT+="$RED "
+			PROMPT="$PROMPT$RED "
 		else
-			PROMPT+="$GREEN "
+			PROMPT="$PROMPT$GREEN "
 		fi
 
 		# Ahead, behind or out of sync with upstream
@@ -76,36 +76,36 @@ append_git() {
 			uhash="$(git rev-parse $upstream 2>/dev/null)"
 			if [ "$uhash" = "@{u}" ]; then
 				# remote-tracking branch has been removed
-				PROMPT+="!"
+				PROMPT="$PROMPT!"
 			elif [ "$ghash" != "$uhash" ]; then
 				if git rev-list HEAD 2>/dev/null | grep --quiet --max-count=1 $uhash; then
-					PROMPT+="+"
+					PROMPT="$PROMPT+"
 				elif git rev-list $upstream 2>/dev/null | grep --quiet --max-count=1 $ghash; then
-					PROMPT+="-"
+					PROMPT="$PROMPT-"
 				else
-					PROMPT+="~"
+					PROMPT="$PROMPT~"
 				fi
 			fi
 		fi
 
 		branch="$(git symbolic-ref --short HEAD 2>/dev/null)"
 		if [ "$branch" ]; then
-			PROMPT+="$branch"
+			PROMPT="$PROMPT$branch"
 		else
 			branch="$(git tag --points-at HEAD | tail -1)"
 			if [ "$branch" ]; then
-				PROMPT+="<$branch>"
+				PROMPT="$PROMPT<$branch>"
 			else
-				PROMPT+="${ghash:0:7}"
+				PROMPT="$PROMPT${ghash:0:7}"
 			fi
 		fi
 
 		# New un-tracked files
 		if git status --porcelain 2>/dev/null | grep --quiet "^?? "; then
-			PROMPT+="*"
+			PROMPT="$PROMPT*"
 		fi
 
-		PROMPT+="$ACCENT )$DASH"
+		PROMPT="$PROMPT$ACCENT )$DASH"
 	fi
 }
 append_command() {
@@ -126,7 +126,7 @@ append_command() {
 		index_left="$((index_left - 2))"
 		last_command="${LAST_COMMAND:0:index_left}...${LAST_COMMAND:index_right}"
 	fi
-	PROMPT+="$DASH( $last_command )$DASH"
+	PROMPT="$PROMPT$DASH( $last_command )$DASH"
 }
 append_path() {
 	local path="$(pwd)"
@@ -137,7 +137,7 @@ append_path() {
 		pi=$((pl-17))
 		path="...${path:pi}"
 	fi
-	PROMPT+="($path)"
+	PROMPT="$PROMPT($path)"
 }
 
 PROMPT="\n$BOLD$ACCENT"
@@ -146,19 +146,19 @@ append_timestamp
 append_battery
 append_git
 append_command
-PROMPT+='\n'
+PROMPT="$PROMPT\n"
 append_path
 
 
 if [ "$LAST_COMMAND_CODE" = "0" ]; then
-	PROMPT+="$BOLD$GREEN"
+	PROMPT="$PROMPT$BOLD$GREEN"
 else
-	PROMPT+="$BOLD$RED"
+	PROMPT="$PROMPT$BOLD$RED"
 fi
 if [ "$USER" = "root" ]; then
-	PROMPT+="#"
+	PROMPT="$PROMPT#"
 else
-	PROMPT+="$"
+	PROMPT="$PROMPT$"
 fi
 
 echo -e "$PROMPT$CLEAR "
