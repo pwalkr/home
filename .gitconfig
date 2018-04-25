@@ -21,3 +21,8 @@
     ff = only
 [advice]
     detachedHead = false
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
