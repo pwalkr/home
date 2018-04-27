@@ -35,3 +35,10 @@
 # Home Folders
 Downloads
 work
+
+# Development
+.project
+.cproject
+.settings
+
+.idea
