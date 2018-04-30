@@ -16,7 +16,7 @@ bindsym $mod+r exec dmenu_run
 bindsym $mod+Control+q kill
 
 # Lock Screen
-#bindsym $mod+Shift+l exec xscreensaver-command --lock
+bindsym $mod+Shift+l exec xscreensaver-command --lock
 
 # Media
 bindsym XF86AudioRaiseVolume exec amixer sset Master 3%+
@@ -39,18 +39,16 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # Remove titles for new windows
-new_window pixel 2
-new_float pixel 2
+default_border pixel 2
 
 # toggle fullscreen mode
-bindsym $mod+f fullscreen
+bindsym $mod+f fullscreen toggle
 
 # toggle float
 bindsym $mod+Shift+space floating toggle
 
 # Use Mouse+$mod to drag floating windows
-# Resize them with right mouse button + $mod.
-floating_modifier $mod normal
+floating_modifier $mod
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -89,18 +87,9 @@ bindsym $mod+Control+r restart
 # exit (logout)
 bindsym $mod+Control+e exit
 
-# Read `man 5 sway-bar` for more information about this section.
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
 bar {
     status_command i3status
     position top
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
 }
-
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-
-include /etc/sway/config.d/*
