@@ -1,0 +1,45 @@
+#!/bin/sh
+
+usage() {
+	echo "$0 <command> [options]" 1>&2
+}
+
+HELPER_LOCKDIR="/tmp/i3-helper.lckd"
+
+summon_workspace() {
+	local target="$1"
+	local swap=
+	if [ -z "$target" ]; then
+		echo "No workspace specified" 1>&2
+		exit 1
+	fi
+	current="$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).name')"
+	output="$(i3-msg -t get_outputs | jq -r ".[] | select(.current_workspace==$current).name")"
+	# If target is on the other monitor, swap current to replace it
+	swap="$(i3-msg -t get_outputs | jq -r ".[] | select(.current_workspace==\"$target\").name")"
+	if [ "$swap" ]; then
+		swap="move workspace to output $swap; "
+	fi
+	i3-msg "${swap}workspace $target; move workspace to output $output; workspace $target"
+}
+
+for x in `seq 1 20`; do
+	mkdir "$HELPER_LOCKDIR" &>/dev/null && break;
+	if [ $x = 20 ]; then
+		echo "Failed to acquire lock" 1>&2
+		exit 1
+	fi
+	usleep 100000
+done
+
+query="$1"; shift
+case "$query" in
+	"summon")
+		summon_workspace "$@"
+	;;
+	*)
+		usage
+	;;
+esac
+
+rmdir "$HELPER_LOCKDIR"
