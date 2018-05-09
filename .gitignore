@@ -1,8 +1,3 @@
-# Typical temporary files
-*~
-*.swp
-*.swo
-
 # Volatile
 .bash_history
 .bash_logout
@@ -35,10 +30,3 @@
 # Home Folders
 Downloads
 work
-
-# Development
-.project
-.cproject
-.settings
-
-.idea

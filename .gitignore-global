@@ -1,0 +1,11 @@
+# Typical temporary files
+*~
+*.swp
+*.swo
+
+# Development
+.project
+.cproject
+.settings
+
+.idea

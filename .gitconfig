@@ -9,7 +9,7 @@
     ui = true
 [core]
     editor = vim
-    excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore-global
     # This is a hack to reduce diff tabstop from 8 to 4
     pager = less -x1,5
 [push]
