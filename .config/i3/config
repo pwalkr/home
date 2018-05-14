@@ -23,6 +23,8 @@ bindsym XF86AudioRaiseVolume exec amixer sset Master 3%+
 bindsym XF86AudioLowerVolume exec amixer sset Master 3%-
 bindsym XF86AudioMute exec amixer sset Master toggle
 
+bindsym --release Print exec scrot
+
 # Application focus
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
