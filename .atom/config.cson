@@ -1,0 +1,27 @@
+"*":
+  "bracket-matcher":
+    autocompleteBrackets: false
+    highlightMatchingLineNumber: true
+  core:
+    telemetryConsent: "limited"
+  editor:
+    showInvisibles: true
+    tabLength: 4
+  "exception-reporting":
+    userId: "ad98ca0c-e4e1-488a-b082-86f1dbf2f481"
+  minimap: {}
+  "platformio-ide-terminal":
+    style:
+      fontSize: "13"
+    toggles:
+      autoClose: true
+  "proto-repl": {}
+  "terminal-plus":
+    core: {}
+    toggles:
+      autoClose: true
+      cursorBlink: false
+      runInsertedText: false
+".clojure.source":
+  editor:
+    tabLength: 2
