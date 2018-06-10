@@ -23,13 +23,16 @@ export SYSTEMD_EDITOR="vim"
 # Bash completion functions
 
 _bc_docker_images() {
-	local cur images
-	COMPREPLY=()
-	cur="${COMP_WORDS[COMP_CWORD]}"
+	local images=
 
-	images="$(docker images | awk '{print $1}' | grep -v "^<none>$\|^REPOSITORY$" | sort --unique)"
+	for image in $(docker images | awk '{print $1":"$2}' | sort --unique); do
+		# exclude unnamed images, strip un-tagged suffix
+		if ! [[ $image = "<none>:"* ]]; then
+			images+=" ${image//:<none>/}"
+		fi
+	done
 
-	COMPREPLY=( $(compgen -W "${images//$'\n'/ }" -- "$cur") )
+	COMPREPLY=( $(compgen -W "$images" -- "${COMP_WORDS[COMP_CWORD]}") )
 }
 
 complete -F _bc_docker_images dockershell
