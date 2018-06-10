@@ -8,7 +8,7 @@ usage() {
 
 while true; do
 	case "$1" in
-		--help|-help)
+		--help|-h)
 			usage
 			exit
 		*)
