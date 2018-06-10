@@ -1,7 +1,17 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+source "$HOME/.profile"
+
 PS1='$(s=$?; l="$(history 1)"; $HOME/.ps1 "${l:7}" "$s")'
+
+alias cpr='rsync --archive --progress'
+alias grep='grep --color=auto'
+alias ll='ls -al'
+alias ls='ls --color=auto'
+alias npml='PATH=$(npm bin):$PATH'
+alias please='sudo'
+alias vi='vim'
 
 export BROWSER="firefox"
 export EDITOR=vim
@@ -10,12 +20,19 @@ export HISTCONTROL=ignoreboth
 export HISTSIZE=100000
 export SYSTEMD_EDITOR="vim"
 
-[ -f $HOME/.alias ] && source $HOME/.alias
+# Bash completion functions
 
-if [ -d $HOME/.bash_completion.d ]; then
-	for f in $HOME/.bash_completion.d/*; do
-		source "$f"
+_bc_docker_images() {
+	local images=
+
+	for image in $(docker images | awk '{print $1":"$2}' | sort --unique); do
+		# exclude unnamed images, strip un-tagged suffix
+		if ! [[ $image = "<none>:"* ]]; then
+			images+=" ${image//:<none>/}"
+		fi
 	done
-fi
 
-PATH="$HOME/bin:$PATH"
+	COMPREPLY=( $(compgen -W "$images" -- "${COMP_WORDS[COMP_CWORD]}") )
+}
+
+complete -F _bc_docker_images dockershell

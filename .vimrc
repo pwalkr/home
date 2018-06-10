@@ -1,3 +1,8 @@
+call plug#begin('~/.vim/plugins')
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree'
+call plug#end()
+
 set nocompatible           " Disable any vi-compatibility
 set ruler                  " Always show line/col# stats
 set number                 " Display line numbers
@@ -17,11 +22,8 @@ set shiftwidth=4           " Width of indent/unindent
 set noexpandtab            " Use tabs
 set smartindent            " Smarter than 'autoindent'
 
-filetype plugin on
-
 " Colors
 colorscheme desert
-syntax on
 
 " Highlight uwanted spaces
 highlight ExtraWhitespace ctermbg=darkred guibg=darkred
@@ -37,3 +39,6 @@ if exists('+colorcolumn')
 else
     match ColorColumn /\%81v.\+/
 endif
+
+" Open on startup
+"autocmd vimenter * NERDTree

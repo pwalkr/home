@@ -1,8 +1,0 @@
-alias browser='chromium'
-alias cpr='rsync --archive --progress'
-alias grep='grep --color=auto'
-alias ll='ls -al'
-alias ls='ls --color=auto'
-alias npml='PATH=$(npm bin):$PATH'
-alias please='sudo'
-alias vi='vim'
