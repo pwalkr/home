@@ -1,3 +1,1 @@
-.  ~/.bashrc
-
-numlockx on
+PATH="$HOME/bin:$PATH"
