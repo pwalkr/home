@@ -164,4 +164,4 @@ else
 	PROMPT="$PROMPT$"
 fi
 
-echo -e "$PROMPT$CLEAR "
+printf "%b%b " "$PROMPT" "$CLEAR"
