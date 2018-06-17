@@ -1,8 +1,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-source "$HOME/.profile"
-
+PATH="$HOME/bin:$PATH"
 PS1='$(s=$?; l="$(history 1)"; $HOME/.ps1 "${l:7}" "$s")'
 
 alias cpr='rsync --archive --progress'
