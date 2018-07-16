@@ -95,3 +95,8 @@ bar {
     status_command i3status
     position top
 }
+
+# Run local user interface setup
+# E.g.:
+#feh --no-fehbg --bg-fill /usr/share/archlinux/wallpaper/archlinux-firestarter.jpg
+exec ~/.config/localrc

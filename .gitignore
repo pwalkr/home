@@ -23,6 +23,9 @@
 .xscreensaver
 .Xauthority
 
+# Local Environment Setup
+.config/localrc
+
 # Security
 .credentials
 .ssh
