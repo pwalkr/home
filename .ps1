@@ -99,7 +99,7 @@ append_git() {
 			if [ "$branch" ]; then
 				PROMPT="$PROMPT<$branch>"
 			else
-				PROMPT="$PROMPT${ghash:0:7}"
+				PROMPT="$PROMPT$(git rev-parse --short HEAD)"
 			fi
 		fi
 
@@ -127,7 +127,9 @@ append_command() {
 		index_left="$((length_truncated / 2))"
 		index_right="$((${#LAST_COMMAND} - index_left + 1))"
 		index_left="$((index_left - 2))"
-		last_command="${LAST_COMMAND:0:index_left}...${LAST_COMMAND:index_right}"
+		last_command="$(truncate "$LAST_COMMAND" 1 $index_left)"
+		last_command="$last_command..."
+		last_command="$last_command$(truncate "$LAST_COMMAND" $index_right ${#LAST_COMMAND}-1)"
 	fi
 	PROMPT="$PROMPT$DASH( $last_command )$DASH"
 }
@@ -138,9 +140,18 @@ append_path() {
 	if [ "${#path}" -gt 20 ]; then
 		pl=${#path}
 		pi=$((pl-17))
-		path="...${path:pi}"
+		path="...$(truncate "$path" $pi)"
 	fi
 	PROMPT="$PROMPT($path)"
+}
+
+truncate() {
+	local str="$1"
+	local ri=0
+	local li=
+	[ -z "$2" ] || ri="$2"
+	[ -z "$3" ] || li=",$3"
+	echo "$str" | awk "{print substr(\$0,$ri$li)}"
 }
 
 PROMPT="\n$BOLD$ACCENT"
