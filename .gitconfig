@@ -17,6 +17,9 @@
 [include]
     # User preferences in a separate file for better modularity
     path = .gituser
+        #[user]
+        #    name = John Doe
+        #    email = johndoe@example.com
 [pull]
     ff = only
 [advice]
