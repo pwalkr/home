@@ -1,35 +1,6 @@
-# Volatile
-.bash_history
-.bash_logout
-.ccache
-.config
-.gituser
-.gnome
-.java
-.lesshst
-.local
-.mono
-.npm
-.pki
-.purple
-.recently-used
-.subversion
-.snmp
-.thumbnails
-.thunderbird
-.viminfo
-.vim/.netrwhist
-.xmonad
-.xscreensaver
-.Xauthority
-
-# Local Environment Setup
-.config/localrc
-
-# Security
-.credentials
-.ssh
+/.*
 
 # Home Folders
+Desktop
 Downloads
-work
+workspace
