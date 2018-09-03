@@ -8,6 +8,9 @@ LAST_COMMAND_CODE="$2"
 
 PROMPT=
 
+# Un-comment to auto-save git repos every 5 minutes
+GIT_AUTO_SAVE="$(which git-save 2>/dev/null)"
+
 # Longer than a hyphen, provides continuous horizontal line
 #DASH="$(echo -e "\xe2\x94\x80")"
 DASH="-"
@@ -146,6 +149,24 @@ append_path() {
 	PROMPT="$PROMPT($path)"
 }
 
+git_auto_save() {
+	# Only auto save if:
+	#    we have changes
+	#    we aren't already doing something (commit, rebase)
+	#    it's been at least 5 minutes since the last commit
+	if [ -z "$GIT_AUTO_SAVE" ] \
+			|| [ -z "`git diff --name-only 2>/dev/null | head -1`" ] \
+			|| [ -f "$(git rev-parse --git-path index.lock)" ] \
+			|| [ -n "`git diff --name-only --cached 2>/dev/null | head -1`" ] \
+			|| [ -d "$(git rev-parse --git-path rebase-merge)" ] \
+			|| [ -d "$(git rev-parse --git-path rebase-apply)" ] \
+			|| [ -n "$(git log --since="$(date --date='5 minutes ago')")" ]; then
+		return
+	fi
+
+	$GIT_AUTO_SAVE
+}
+
 truncate() {
 	local str="$1"
 	local ri=0
@@ -155,6 +176,8 @@ truncate() {
 	echo "$str" | awk "{print substr(\$0,$ri$li)}"
 }
 
+git_auto_save
+
 PROMPT="\n$BOLD$ACCENT"
 append_userhost
 append_timestamp
@@ -163,7 +186,6 @@ append_git
 append_command
 PROMPT="$PROMPT\n"
 append_path
-
 
 if [ "$LAST_COMMAND_CODE" = "0" ]; then
 	PROMPT="$PROMPT$BOLD$GREEN"
