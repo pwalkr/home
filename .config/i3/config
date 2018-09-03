@@ -99,4 +99,5 @@ bar {
 # Run local user interface setup
 # E.g.:
 #feh --no-fehbg --bg-fill /usr/share/archlinux/wallpaper/archlinux-firestarter.jpg
+#nm-applet --no-startup-id &
 exec ~/.config/localrc
