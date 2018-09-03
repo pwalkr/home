@@ -59,6 +59,7 @@ append_git() {
 	local uhash=
 	local branch=
 	if ! which git >/dev/null 2>&1; then
+		PROMPT="$PROMPT$DASH( [no git] )$DASH"
 		return
 	fi
 	ghash="$(git rev-parse HEAD 2>/dev/null)"
