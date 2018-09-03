@@ -4,7 +4,7 @@
     message = log -1 --format=%B
     orphans = "!git tree `git reflog --format=%h`"
     tree = log --graph --pretty=oneline --abbrev-commit --decorate
-    wip = commit -am WIP
+    wip = "!git-save"
 [color]
     ui = true
 [core]
