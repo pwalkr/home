@@ -50,5 +50,5 @@ if [ -z "$(docker images --quiet "$IMAGE")" ] && ! docker images --quiet | grep 
 	exit 1
 fi
 
-echo docker run --entrypoint bash --rm --interactive --tty $USER_FLAG $VOLUME_FLAG $IMAGE
-eval docker run --entrypoint bash --rm --interactive --tty $USER_FLAG $VOLUME_FLAG $IMAGE
+echo docker run --entrypoint sh --rm --interactive --tty $USER_FLAG $VOLUME_FLAG $IMAGE
+eval docker run --entrypoint sh --rm --interactive --tty $USER_FLAG $VOLUME_FLAG $IMAGE
