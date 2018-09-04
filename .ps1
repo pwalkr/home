@@ -9,7 +9,7 @@ LAST_COMMAND_CODE="$2"
 PROMPT=
 
 # Un-comment to auto-save git repos every 5 minutes
-GIT_AUTO_SAVE="$(which git-save 2>/dev/null)"
+#GIT_AUTO_SAVE="$(which git-save 2>/dev/null)"
 
 # Longer than a hyphen, provides continuous horizontal line
 #DASH="$(echo -e "\xe2\x94\x80")"
