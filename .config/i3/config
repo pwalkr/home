@@ -100,4 +100,6 @@ bar {
 # E.g.:
 #feh --no-fehbg --bg-fill /usr/share/archlinux/wallpaper/archlinux-firestarter.jpg
 #nm-applet --no-startup-id &
+#systemctl --user start synergys
+#xscreensaver &
 exec ~/.config/localrc
