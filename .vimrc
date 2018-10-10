@@ -19,25 +19,31 @@ set backspace=indent,eol,start " Backspace over everything
 
 set tabstop=4              " Visible width of tab character
 set shiftwidth=4           " Width of indent/unindent
-set noexpandtab            " Use tabs
+set expandtab              " Use spaces
 set smartindent            " Smarter than 'autoindent'
 
 " Colors
 colorscheme desert
 
 " Highlight uwanted spaces
-highlight ExtraWhitespace ctermbg=darkred guibg=darkred
+"highlight ExtraWhitespace ctermbg=darkgray guibg=darkgray
 " Trailing whitespace | Tabs
 "match ExtraWhitespace /\s\+$\|\t\+/
 " Trailing whitespace | Tabs in middle of line
-match ExtraWhitespace /\s\+$\|[^\t]\zs\t\+/
+"match ExtraWhitespace /\s\+$\|[^\t]\zs\t\+/
+
+highlight TrailingWhitespace ctermbg=darkred guibg=darkred
+match TrailingWhitespace /\s\+$/
+
+highlight TabsWhitespace ctermbg=darkgray guibg=darkgray
+2match TabsWhitespace /\t\+/
 
 " Highlight 81st column
-highlight ColorColumn ctermbg=black guibg=black
+highlight ColorColumn ctermbg=darkgray guibg=darkgray
 if exists('+colorcolumn')
     set colorcolumn=81
 else
-    match ColorColumn /\%81v.\+/
+    3match ColorColumn /\%81v.\+/
 endif
 
 " Open on startup
