@@ -2,6 +2,7 @@
   "bracket-matcher":
     autocompleteBrackets: false
     highlightMatchingLineNumber: true
+  "build-cmake": {}
   core:
     telemetryConsent: "limited"
   editor:
