@@ -38,13 +38,12 @@ match TrailingWhitespace /\s\+$/
 highlight TabsWhitespace ctermbg=darkgray guibg=darkgray
 2match TabsWhitespace /\t\+/
 
-" Highlight 81st column
-highlight ColorColumn ctermbg=darkgray guibg=darkgray
 if exists('+colorcolumn')
     set colorcolumn=81
-else
-    3match ColorColumn /\%81v.\+/
 endif
+
+highlight ToDo ctermbg=yellow guibg=yellow
+3match ToDo /\<\(todo\|fixme\)\>/
 
 " Open on startup
 "autocmd vimenter * NERDTree
