@@ -42,9 +42,6 @@ if exists('+colorcolumn')
     set colorcolumn=81
 endif
 
-highlight ToDo ctermbg=yellow guibg=yellow
-3match ToDo /\<\(todo\|fixme\)\>/
-
 " Disable F1 Help Menu
 map <F1> <nop>
 imap <F1> <nop>
