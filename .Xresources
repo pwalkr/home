@@ -31,10 +31,9 @@
 *color15: #ffffff
 
 urxvt*saveLines: 32767
+
 urxvt*foreground: #f2f2f2
 urxvt*background: #101010
-urxvt*scrollBar: false
-urxvt*font: xft:Bitstream\ Vera\ Sans\ Mono:style=roman:pixelsize=13
 
 ! Transparency
 !
@@ -44,7 +43,7 @@ urxvt*transparent: true
 urxvt*shading: 30
 urxvt*fading: 0
 urxvt*scrollBar: false
-urxvt*font: xft:Bitstream\ Vera\ Sans\ Mono:style=roman:pixelsize=13
+urxvt*font: xft:Bitstream\ Vera\ Sans\ Mono:style=roman:pixelsize=11
 
 xterm*faceName: terminus:pixelsize=14
 xterm*foreground: #f2f2f2
