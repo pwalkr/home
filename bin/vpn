@@ -1,37 +1,24 @@
 #!/bin/bash
 
-VPNDIR="$HOME/.vpn"
-
-OVPN="$(ls "$VPNDIR" | grep --max-count=1 "\.ovpn$")"
-
-if [ -z "$OVPN" ]; then
-	echo "Could not find .ovpn file"
-	exit 1
-fi
+usage() {
+    echo "Usage:  vpn start <config>"
+    echo "        vpn stop"
+}
 
 case "$1" in
 	start)
-		upcmd="$(mktemp)"
-
-		echo "Generating route-up:"
-		cat <<-'EOF' | tee "$upcmd" | sed "s;^;    ;"
-			#!/bin/bash
-			dhcpcd $1
-		EOF
-
-		chmod +x "$upcmd"
-
-		echo "sudo openvpn --script-security 2 --route-up $upcmd --config $VPNDIR/$OVPN"
-		# Load sudo before backgrounding route-up removal
-		sudo echo &>/dev/null
-		(sleep 10; rm -f $upcmd) &
-		      sudo openvpn --script-security 2 --route-up $upcmd --config $VPNDIR/$OVPN
+		if [ -f "$1" ]; then
+			set -x
+			sudo openvpn $1 --daemon
+		else
+			usage
+		fi
 	;;
 	stop)
-		echo "sudo killall openvpn"
-		      sudo killall openvpn
+		set -x
+		sudo killall openvpn
 	;;
 	*)
-		echo "Usage: vpn <start|stop>"
+		usage
 	;;
 esac
