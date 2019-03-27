@@ -4,8 +4,12 @@
     highlightMatchingLineNumber: true
   "build-cmake": {}
   core:
+    packagesWithKeymapsDisabled: [
+      "move-panes"
+    ]
     telemetryConsent: "limited"
   editor:
+    fontSize: 13
     showInvisibles: true
     tabLength: 4
   "exception-reporting":

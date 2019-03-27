@@ -1,0 +1,3 @@
+'atom-workspace atom-text-editor':
+  'ctrl-shift-left': 'move-panes:move-left'
+  'ctrl-shift-right': 'move-panes:move-next'
