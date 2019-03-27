@@ -1,0 +1,13 @@
+build-cmake@0.12.0
+dbg@1.6.3
+dbg-gdb@1.7.8
+focus-follows-mouse@0.0.3
+ink@0.10.1
+language-cmake@1.1.0
+language-docker@1.1.8
+minimap@4.29.9
+output-panel@0.3.4
+platformio-ide-terminal@2.9.1
+proto-repl@1.4.24
+split-diff@1.6.0
+
