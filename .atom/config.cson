@@ -8,6 +8,10 @@
       "move-panes"
     ]
     telemetryConsent: "limited"
+    themes: [
+      "atom-dark-ui"
+      "atom-dark-syntax"
+    ]
   editor:
     fontSize: 13
     showInvisibles: true
@@ -16,10 +20,19 @@
     userId: "ad98ca0c-e4e1-488a-b082-86f1dbf2f481"
   minimap: {}
   "platformio-ide-terminal":
+    ansiColors:
+      normal:
+        blue: "#4444dd"
+      zBright:
+        brightBlue: "#5555ff"
+    core:
+      workingDirectory: "Active File"
     style:
       fontSize: "13"
+      theme: "pro"
     toggles:
       autoClose: true
+      selectToCopy: false
   "proto-repl": {}
   "terminal-plus":
     core: {}
