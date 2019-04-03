@@ -3,7 +3,7 @@
     hold = branch hold
     message = log -1 --format=%B
     orphans = "!git tree `git reflog --format=%h`"
-    tree = log --graph --pretty=oneline --abbrev-commit --decorate
+    tree = log --graph --oneline
     wip = "!git-save"
 [color]
     ui = true
