@@ -40,6 +40,8 @@
       autoClose: true
       cursorBlink: false
       runInsertedText: false
+  welcome:
+    showOnStartup: false
 ".clojure.source":
   editor:
     tabLength: 2
