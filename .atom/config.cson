@@ -4,6 +4,9 @@
     highlightMatchingLineNumber: true
   "build-cmake": {}
   core:
+    disabledPackages: [
+      "github"
+    ]
     packagesWithKeymapsDisabled: [
       "move-panes"
     ]
@@ -18,6 +21,10 @@
     tabLength: 4
   "exception-reporting":
     userId: "ad98ca0c-e4e1-488a-b082-86f1dbf2f481"
+  "ide-python":
+    pylsPlugins:
+      pyflakes:
+        enabled: false
   minimap: {}
   "platformio-ide-terminal":
     ansiColors:
