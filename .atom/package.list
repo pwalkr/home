@@ -1,10 +1,13 @@
+atom-ide-ui@0.13.0
+autocomplete-clang@0.11.5
 build-cmake@0.12.0
 dbg@1.6.3
 dbg-gdb@1.7.8
 docblockr@0.13.7
 focus-follows-mouse@0.0.3
 ide-cpp@0.0.3
-ink@0.10.2
+ide-python@1.4.1
+ink@0.10.3
 language-cmake@1.1.0
 language-docker@1.1.8
 minimap@4.29.9
