@@ -1,9 +1,12 @@
 /.*
 
 # Home Folders
-Desktop
-Downloads
-workspace
+/Desktop
+# Work utilities
+/dev-tools
+/Downloads
+/Nextcloud
+/workspace
 
 # Ubuntu's app settings folder
 snap

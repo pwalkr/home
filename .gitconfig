@@ -4,7 +4,7 @@
     message = log -1 --format=%B
     orphans = "!git tree `git reflog --format=%h`"
     tree = log --graph --oneline
-    wip = "!git-save"
+    wip = commit -am wip
 [color]
     ui = true
 [core]
@@ -26,6 +26,5 @@
     detachedHead = false
 [merge]
 	tool = vimdiff
-	conflictstyle = diff3
 [mergetool]
 	prompt = false
