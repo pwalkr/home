@@ -12,7 +12,6 @@ alias npml='PATH=$(npm bin):$PATH'
 alias please='sudo'
 alias vi='vim'
 
-export BROWSER="firefox"
 export EDITOR=vim
 export FILEBROWSER="thunar"
 export HISTCONTROL=ignoreboth
