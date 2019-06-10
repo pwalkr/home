@@ -1,0 +1,9 @@
+# Don't actually run anything
+exit
+
+# Check RAM stats
+sudo dmidecode --type 17 | grep "Speed\|Size"
+
+# Check CPU stats
+cat /proc/cpuinfo
+lscpu
