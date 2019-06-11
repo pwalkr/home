@@ -18,8 +18,8 @@ bindsym $mod+Control+q kill
 # Lock Screen
 bindsym $mod+Shift+l exec xscreensaver-command --lock
 
-bindsym XF86MonBrightnessDown exec sudo ~/bin/backlight -
-bindsym XF86MonBrightnessUp exec sudo ~/bin/backlight +
+bindsym XF86MonBrightnessDown exec ~/bin/backlight -dec 10
+bindsym XF86MonBrightnessUp exec ~/bin/backlight -inc 10
 
 # Media
 bindsym XF86AudioRaiseVolume exec amixer sset Master 3%+

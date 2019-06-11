@@ -1,26 +1,55 @@
-#!/bin/bash
+#!/bin/sh
 
-FILE_BRIGHTNESS="/sys/class/backlight/intel_backlight/brightness"
-FILE_MAX_BRIGHTNESS="/sys/class/backlight/intel_backlight/max_brightness"
+system_backlight="/usr/local/bin/backlight"
 
-BRIGHTNESS="$(cat "$FILE_BRIGHTNESS")"
-MAX_BRIGHTNESS="$(cat "$FILE_MAX_BRIGHTNESS")"
+if [ "$0" != "$system_backlight" ]; then
+    if [ "$(md5sum "$0" | awk '{print $1}')" != \
+            "$(md5sum "$system_backlight" 2>/dev/null | awk '{print $1}')" ]
+            then
+        echo "Installing latest backlight script"
+        echo + sudo install -D "$0" "$system_backlight"
+               sudo install -D "$0" "$system_backlight"
+        echo + sudo chmod +rx,go-w,u+s "$system_backlight"
+               sudo chmod +rx,go-w,u+s "$system_backlight"
+        sudoers="ALL ALL=NOPASSWD: /usr/local/bin/backlight"
+        if echo "$sudoers" | visudo --check -f -; then
+            echo + sudo echo "$sudoers" "|" sudo tee /etc/sudoers.d/backlight
+                   sudo echo "$sudoers"  |  sudo tee /etc/sudoers.d/backlight \
+                       >/dev/null
+            echo + sudo chmod 400 /etc/sudoers.d/backlight
+                   sudo chmod 400 /etc/sudoers.d/backlight
+        else
+            echo "Something is wrong with our visudo line:"
+            echo "    $sudoers"
+            exit 1
+        fi
+    fi
+    exec sudo "$system_backlight" "$@"
+fi
 
-INCREMENT="$((MAX_BRIGHTNESS/20))"
+control="$(ls /sys/class/backlight/*/brightness)"
+max="$(cat "$(dirname "$control")/max_brightness")"
+
+if [ ! -f "$control" -o -z "$max" ]; then
+    echo "Failed to find brightness and max brightness. Cannot continue"
+    exit 1
+fi
+
+brightness="$(cat "$control")"
 
 case "$1" in
-	"+")
-		if [ "$((BRIGHTNESS+INCREMENT))" -lt "$MAX_BRIGHTNESS" ]; then
-			echo "$((BRIGHTNESS+INCREMENT))" > "$FILE_BRIGHTNESS"
-		else
-			echo "$MAX_BRIGHTNESS" > "$FILE_BRIGHTNESS"
-		fi;;
-	"-")
-		if [ "$((BRIGHTNESS-INCREMENT))" -gt "$INCREMENT" ]; then
-			echo "$((BRIGHTNESS-INCREMENT))" > "$FILE_BRIGHTNESS"
-		else
-			echo "$INCREMENT" > "$FILE_BRIGHTNESS"
-		fi;;
+    -inc)
+        brightness="$(expr "$brightness" + "$2")"
+        if [ "$brightness" -gt "$max" ]; then
+            brightness="$max"
+        fi
+        echo "$brightness" | tee "$control"
+        ;;
+    -dec)
+        brightness="$(expr "$brightness" - "$2")"
+        if [ "$brightness" -lt "$2" ]; then
+            brightness="$2"
+        fi
+        echo "$brightness" | tee "$control"
+        ;;
 esac
-
-echo "$(cat "$FILE_BRIGHTNESS")/$MAX_BRIGHTNESS"
