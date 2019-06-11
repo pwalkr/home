@@ -23,13 +23,21 @@ summon_workspace() {
 	i3-msg "${swap}workspace $target; move workspace to output $output; workspace $target"
 }
 
+for util in i3-msg jq; do
+	if ! which $util; then
+		echo "Missing utility '$util'"
+		notify-send "i3-helper: missing utility '$util'"
+		exit 1
+	fi
+done
+
 for x in `seq 1 20`; do
 	mkdir "$HELPER_LOCKDIR" &>/dev/null && break;
 	if [ $x = 20 ]; then
 		echo "Failed to acquire lock" 1>&2
 		exit 1
 	fi
-	usleep 100000
+	sleep 0.1
 done
 
 query="$1"; shift
