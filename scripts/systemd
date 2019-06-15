@@ -1,0 +1,5 @@
+# Follow log for service
+journalctl -u service.service -f
+
+# Don't truncate output
+#--no-pager
