@@ -3,3 +3,9 @@ journalctl -u service.service -f
 
 # Don't truncate output
 #--no-pager
+
+# Tree of systemd targets
+systemd-analyze plot > systemd.svg
+
+# Run gdb on last core dump
+coredumpctl gdb -1
