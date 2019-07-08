@@ -1,4 +1,6 @@
-# Sources: https://i3wm.org/docs/userguide.html and `man 5 sway`
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:monospace 8
 
 # Mod key > windows-logo key
 set $mod Mod4
@@ -7,7 +9,7 @@ set $mod Mod4
 bindsym $mod+Shift+Return exec urxvt
 
 # Internet Browser
-bindsym $mod+Shift+i exec firefox
+bindsym $mod+Shift+i exec brave
 
 # Any (run launcher)
 bindsym $mod+r exec dmenu_run
@@ -16,12 +18,17 @@ bindsym $mod+r exec dmenu_run
 bindsym $mod+Control+q kill
 
 # Lock Screen
-#bindsym $mod+Shift+l exec xscreensaver-command --lock
+bindsym $mod+Shift+l exec xscreensaver-command --lock
+
+bindsym XF86MonBrightnessDown exec ~/bin/backlight -dec 10
+bindsym XF86MonBrightnessUp exec ~/bin/backlight -inc 10
 
 # Media
 bindsym XF86AudioRaiseVolume exec amixer sset Master 3%+
 bindsym XF86AudioLowerVolume exec amixer sset Master 3%-
 bindsym XF86AudioMute exec amixer sset Master toggle
+
+bindsym --release Print exec scrot
 
 # Application focus
 bindsym $mod+Left focus left
@@ -43,26 +50,25 @@ new_window pixel 2
 new_float pixel 2
 
 # toggle fullscreen mode
-bindsym $mod+f fullscreen
+bindsym $mod+f fullscreen toggle
 
 # toggle float
 bindsym $mod+Shift+space floating toggle
 
 # Use Mouse+$mod to drag floating windows
-# Resize them with right mouse button + $mod.
-floating_modifier $mod normal
+floating_modifier $mod
 
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 exec ~/bin/i3-helper summon 1
+bindsym $mod+2 exec ~/bin/i3-helper summon 2
+bindsym $mod+3 exec ~/bin/i3-helper summon 3
+bindsym $mod+4 exec ~/bin/i3-helper summon 4
+bindsym $mod+5 exec ~/bin/i3-helper summon 5
+bindsym $mod+6 exec ~/bin/i3-helper summon 6
+bindsym $mod+7 exec ~/bin/i3-helper summon 7
+bindsym $mod+8 exec ~/bin/i3-helper summon 8
+bindsym $mod+9 exec ~/bin/i3-helper summon 9
+bindsym $mod+0 exec ~/bin/i3-helper summon 10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -104,3 +110,4 @@ bar {
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
 include /etc/sway/config.d/*
+exec ~/.config/localrc
