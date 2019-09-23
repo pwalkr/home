@@ -38,3 +38,7 @@ fi
 set -x
 sudo sh -c "$rootc"
 $userc
+
+if ! file /boot/vmlinuz-linux | grep "$(uname -r)"; then
+    echo "'uname -r' not up-to-date with /boot/vmlinuz-linux. Reboot required?"
+fi
