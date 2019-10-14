@@ -28,11 +28,12 @@ elif [ -d "/etc/apt" ]; then
 fi
 
 if [ "$(which pip 2>/dev/null)" ]; then
-    add_to "root" "pip upgrade --all"
+    add_to "root" "pip list --outdated --format=freeze | cut -d= -f1  | xargs -n1 pip install -U"
 fi
 
 if [ "$(which atom 2>/dev/null)" -a "$(which apm 2>/dev/null)" ]; then
     add_to "user" "apm upgrade"
+    add_to "user" "apm rebuild"
 fi
 
 set -x
