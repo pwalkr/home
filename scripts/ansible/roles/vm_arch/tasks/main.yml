@@ -1,0 +1,14 @@
+- pause:
+    prompt: "Username:"
+  register: username
+
+- pause:
+    prompt: "Password:"
+    echo: no
+  register: password
+
+- pause:
+    prompt: "Password (repeat):"
+    echo: no
+  register: pass_confirm
+  failed_when: password.user_input != pass_confirm.user_input

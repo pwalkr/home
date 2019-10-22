@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# Set up a device (e.g. sda) with enough arch linux to run ansible plays
+
+device="$1"
+
+if [ ! -e "$device" ]; then
+    echo "$(basename "$0") </dev/sdx>"
+    exit
+fi
+
+if [ -e "$device"1 ]; then
+    echo "Warning: $device"1" exists. Refusing to continue"
+    echo "Reset with: dd if=/dev/zero of=$device bs=1M count=10"
+    exit 1
+fi
+
+# Packages to install
+packages="base linux linux-firmware"  # Official base:
+packages="$packages dhcpcd grub"      # Basic boot/connectivity
+packages="$packages ansible git"      # Enable ansible provisioning
+
+set -ex
+
+parted "$device" --script -- mklabel msdos
+parted "$device" --script -- mkpart primary '0%' '100%'
+mkfs.ext4 "$device"1
+
+mount "$device"1 /mnt
+
+mkdir /mnt/etc
+genfstab -U /mnt >> /mnt/etc/fstab
+
+#wget 'https://www.archlinux.org/mirrorlist/?country=US&protocol=https&ip_version=4' \
+#    -O/etc/pacman.d/mirrorlist
+#sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
+
+pacstrap /mnt $packages
+
+arch-chroot /mnt grub-install --target=i386-pc "$device"
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+
+arch-chroot /mnt systemctl enable dhcpcd.service
+
+# Don't print "+ set +x"
+{ set +x; } 2>/dev/null
+
+cat <<EOF
+Bootstrap complete. You can now boot to the system and finish setup with ansible.
+Consider adding a device for swap space."
+EOF
