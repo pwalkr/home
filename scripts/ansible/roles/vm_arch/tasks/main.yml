@@ -1,14 +1,36 @@
-- pause:
-    prompt: "Username:"
-  register: username
+#- pause:
+#    prompt: Username
+#  register: username
+#
+#- pause:
+#    prompt: Password
+#    echo: no
+#  register: password
+#
+#- pause:
+#    prompt: Repeat password
+#    echo: no
+#  register: pass_confirm
+#
+#- fail:
+#    msg: Input passwords do not match
+#  failed_when: password.user_input != pass_confirm.user_input
 
-- pause:
-    prompt: "Password:"
-    echo: no
-  register: password
+- name: Install packages
+  pacman:
+    name:
+      # VirtualBox Guest additions and modules for stock kernel
+      - virtualbox-guest-utils
+      - virtualbox-guest-modules-arch
+      # i3 window manager, optional packages, and xinit to start
+      - i3-wm
+      - i3status
+      - dmenu
+      - xorg-xinit
+      - xorg-server
+    state: present
 
-- pause:
-    prompt: "Password (repeat):"
-    echo: no
-  register: pass_confirm
-  failed_when: password.user_input != pass_confirm.user_input
+- name: Install xinitrc
+  copy:
+    src: xinitrc
+    dest: ~/.xinitrc
