@@ -1,0 +1,56 @@
+---
+- name: Update system
+  hosts: localhost
+  tasks:
+
+    # Update according to local package manager
+
+    - name: Check for apt
+      command: which apt
+      register: which_apt
+      changed_when: false
+      failed_when: false
+
+    - name: apt dist-upgrade
+      apt:
+        upgrade: dist
+      become: true
+      when: which_apt.stdout != ''
+
+    - name: Check for pacman
+      command: which pacman
+      register: which_pacman
+      changed_when: false
+      failed_when: false
+
+    - name: pacman -Syu
+      pacman:
+        update_cache: yes
+        upgrade: yes
+      become: true
+      when: which_pacman.stdout != ''
+
+      # Upgrade atom IDE
+
+    - name: Check for apm
+      command: which apm
+      register: which_apm
+      changed_when: false
+      failed_when: false
+
+    - name: 'apm upgrade && Rebuild'
+      shell: 'apm upgrade && apm rebuild'
+      when: which_apm.stdout != ''
+
+      # Upgrade python pip packages
+
+    - name: Check for pip
+      command: which pip
+      register: which_pip
+      changed_when: false
+      failed_when: false
+
+    - name: pip install -U all
+      shell: 'pip list --outdated --format=freeze | cut -d= -f1 | xargs -n1 pip install -U'
+      become: true
+      when: which_pip.stdout != ''

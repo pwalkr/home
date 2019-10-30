@@ -1,0 +1,48 @@
+#!/bin/bash
+
+myansible_d="$(dirname "$0")/myansible.d"
+
+join() {
+    local IFS="$1"
+    shift
+    echo "$*"
+}
+
+query="$1"
+case "$query" in
+    ''|help|--help|-h)
+        cat <<EOF
+Usage:
+    $(basename $0) <play|role> [extra ansible-playbook args]
+
+EOF
+    echo "Plays:"
+    plays=()
+    for play in "$myansible_d"/*.yml; do
+        plays+=("$(basename "${play/.yml}")")
+    done
+    join " " "${plays[@]}" | fold --spaces --width=76 | sed 's/^/    /'
+
+    echo -e "\nRoles:"
+    roles=()
+    for role in "$myansible_d"/roles/*; do
+        roles+=("$(basename "$role")")
+    done
+    join " " "${roles[@]}" | fold --spaces --width=76 | sed 's/^/    /'
+    echo
+    exit
+esac
+shift
+
+cd "$myansible_d"
+export ANSIBLE_NOCOWS=1
+
+if [ -f "$myansible_d/$query.yml" ]; then
+    set -x
+    ansible-playbook $query.yml --ask-become-pass "$@"
+elif [ -f "$myansible_d/roles/$query" ]; then
+    set -x
+else
+    echo "Not a recognized play or query. Try \"help\""
+    exit 1
+fi
