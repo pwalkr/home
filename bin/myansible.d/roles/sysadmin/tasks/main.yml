@@ -1,0 +1,3 @@
+- task: Pacman-install sysadmin utilities
+  pacman:
+    name: clusterssh
