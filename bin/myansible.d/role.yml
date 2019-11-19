@@ -1,0 +1,6 @@
+---
+- name: Run role
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: '{{ myansible_role }}'

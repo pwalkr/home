@@ -19,7 +19,8 @@ EOF
     echo "Plays:"
     plays=()
     for play in "$myansible_d"/*.yml; do
-        plays+=("$(basename "${play/.yml}")")
+        play="$(basename "${play/.yml}")"
+        [ "$play" == "role" ] || plays+=("$play")
     done
     join " " "${plays[@]}" | fold --spaces --width=76 | sed 's/^/    /'
 
@@ -40,8 +41,10 @@ export ANSIBLE_NOCOWS=1
 if [ -f "$myansible_d/$query.yml" ]; then
     set -x
     ansible-playbook $query.yml --ask-become-pass "$@"
-elif [ -f "$myansible_d/roles/$query" ]; then
+elif [ -d "$myansible_d/roles/$query" ]; then
     set -x
+    ansible-playbook role.yml --extra-vars myansible_role=$query \
+        --ask-become-pass "$@"
 else
     echo "Not a recognized play or query. Try \"help\""
     exit 1
