@@ -1,0 +1,6 @@
+- pacman:
+    name:
+      - remmina
+      # Protocol-specific libraries
+      - freerdp
+      - libvncserver
