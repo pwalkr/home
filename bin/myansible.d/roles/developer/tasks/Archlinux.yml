@@ -1,0 +1,5 @@
+- pacman:
+    name:
+      - npm
+      - rxvt-unicode
+  become: true

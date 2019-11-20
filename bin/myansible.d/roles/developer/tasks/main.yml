@@ -1,4 +1,2 @@
-- task: Pacman-install sysadmin utilities
-  pacman:
-    name:
-      - rxvt-unicode
+- name: Install developer utilities
+  include_tasks: '{{ ansible_distribution }}.yml'
