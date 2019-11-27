@@ -38,14 +38,20 @@ shift
 cd "$myansible_d"
 export ANSIBLE_NOCOWS=1
 
+ARGS=(
+    "--ask-become-pass"
+    "--connection=local"
+    "--inventory=localhost,"
+)
+
 if [ -f "$myansible_d/$query.yml" ]; then
-    set -x
-    ansible-playbook $query.yml --ask-become-pass "$@"
+    ARGS+=( "$query.yml" )
 elif [ -d "$myansible_d/roles/$query" ]; then
-    set -x
-    ansible-playbook role.yml --extra-vars myansible_role=$query \
-        --ask-become-pass "$@"
+    ARGS+=( "--extra-vars" "myansible_role=$query" "role.yml" )
 else
     echo "Not a recognized play or query. Try \"help\""
     exit 1
 fi
+
+set -x
+ansible-playbook "${ARGS[@]}" "$@"
