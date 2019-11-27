@@ -1,6 +1,11 @@
 - pacman:
     name:
+      - clusterssh
+      - kubectl
+
       - remmina
       # Protocol-specific libraries
       - freerdp
       - libvncserver
+
+  become: true
