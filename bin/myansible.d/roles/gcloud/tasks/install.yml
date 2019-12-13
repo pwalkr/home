@@ -1,0 +1,49 @@
+- set_fact:
+    remote_tarball: 'https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-273.0.0-linux-x86_64.tar.gz'
+
+- name: Create temporary directory for extract
+  tempfile:
+    state: directory
+  register: extract_dir
+
+- block:
+    - name: Create install path
+      file:
+        path: '{{ gcloud_sdk_install_path }}'
+        state: directory
+
+    - name: Download SDK tarball
+      get_url:
+        url: '{{ remote_tarball }}'
+        dest: '{{ extract_dir.path }}'
+
+    - name: Extract tarball
+      shell: "tar -xf '{{ extract_dir.path }}/{{ remote_tarball | basename }}' -C {{ gcloud_sdk_install_path }} --strip-components=1"
+
+    - name: Run installer
+      shell: '{{ gcloud_sdk_install_path }}/install.sh --quiet --additional-components kubectl'
+
+    - name: Add cloud sdk bin to PATH
+      lineinfile:
+        path: ~/.bashrc
+        line: 'PATH="$PATH:{{ gcloud_sdk_install_path }}/bin"'
+
+    - name: Add autocomplete for utilities
+      lineinfile:
+        path: ~/.bashrc
+        line: '. {{ gcloud_sdk_install_path }}/completion.bash.inc'
+
+  rescue:
+    - name: Remove install directory
+      file:
+        path: '{{ gcloud_sdk_install_path }}'
+        state: absent
+
+    - fail:
+        msg: Failed to install SDK
+
+  always:
+    - name: Remove extract directory
+      file:
+        path: '{{ extract_dir.path }}'
+        state: absent

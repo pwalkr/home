@@ -1,0 +1,12 @@
+- set_fact:
+    gcloud_sdk_install_path: '~/google-cloud-sdk'
+
+- name: Check for output directory
+  stat:
+    path: '{{ gcloud_sdk_install_path }}'
+  register: sdk_stat
+  changed_when: sdk_stat.stat.isdir is not defined
+
+- name: Run installer
+  include_tasks: install.yml
+  when: sdk_stat.stat.isdir is not defined
