@@ -1,0 +1,17 @@
+- name: Install i3 window manager
+  include_tasks: '{{ ansible_distribution }}.yml'
+
+- name: Create config directory
+  file:
+    path: '~/.config/i3'
+    state: directory
+
+- name: Install config
+  copy:
+    src: config
+    dest: '~/.config/i3/config'
+
+- name: Install xinitrc
+  copy:
+    src: xinitrc
+    dest: '~/.xinitrc'

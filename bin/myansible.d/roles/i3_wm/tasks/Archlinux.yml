@@ -1,0 +1,6 @@
+- pacman:
+    name:
+      - i3-wm
+      - xorg-server
+      - xorg-xinit
+  become: true
