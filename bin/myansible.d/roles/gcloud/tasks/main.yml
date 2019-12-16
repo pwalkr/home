@@ -10,3 +10,13 @@
 - name: Run installer
   include_tasks: install.yml
   when: sdk_stat.stat.isdir is not defined
+
+- name: Install beta
+  shell: '{{ gcloud_sdk_install_path }}/install.sh --quiet --additional-components beta'
+  args:
+    creates: '{{ gcloud_sdk_install_path }}/lib/surface/beta'
+
+- name: Install kubectl
+  shell: '{{ gcloud_sdk_install_path }}/install.sh --quiet --additional-components kubectl'
+  args:
+    creates: '{{ gcloud_sdk_install_path }}/bin/kubectl'
