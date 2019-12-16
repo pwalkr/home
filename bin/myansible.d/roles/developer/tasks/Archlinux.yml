@@ -1,5 +1,11 @@
 - pacman:
     name:
+      - curl
       - npm
       - rxvt-unicode
+      - vim
+
+      - man
+      - openssh
+      - which
   become: true

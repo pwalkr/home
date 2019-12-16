@@ -1,7 +1,8 @@
 - pacman:
     name:
       - clusterssh
-      - kubectl
+      - openssh
+      - wget
 
       - remmina
       # Protocol-specific libraries
