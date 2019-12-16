@@ -1,7 +1,9 @@
 - pacman:
     name:
       - clusterssh
+      - dnsutils
       - openssh
+      - tree
       - wget
 
       - remmina
