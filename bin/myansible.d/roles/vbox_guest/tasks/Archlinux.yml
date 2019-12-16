@@ -1,0 +1,16 @@
+- pacman:
+    name:
+      - xf86-video-vmware
+
+      - virtualbox-guest-utils
+      - virtualbox-guest-modules-arch
+
+      # For managing resolution if the guest additions break
+      - arandr
+
+      # Install host-provided utilities
+      #- linux-headers
+      #- gcc
+      #- make
+      #- perl
+  become: true
