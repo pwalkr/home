@@ -1,0 +1,14 @@
+- name: Check for cf
+  stat:
+    path: '{{ cf_install_path }}'
+  register: cf_file
+  changed_when: not cf_file.stat.exists
+
+- name: Extract tarball
+  unarchive:
+    src: 'https://packages.cloudfoundry.org/stable?release=linux64-binary'
+    dest: '{{ cf_install_path | dirname }}'
+    remote_src: true
+    extra_opts: cf
+  when: not cf_file.stat.exists
+  become: true
