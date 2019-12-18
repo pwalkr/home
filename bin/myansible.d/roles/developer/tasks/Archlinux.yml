@@ -5,6 +5,9 @@
       - rxvt-unicode
       - vim
 
+      - unzip
+      - zip
+
       - man
       - openssh
       - which
