@@ -1,0 +1,13 @@
+- name: Check for vault
+  stat:
+    path: '{{ vault_install_path }}'
+  register: vault_file
+  changed_when: not vault_file.stat.exists
+
+- name: Extract tarball
+  unarchive:
+    src: 'https://releases.hashicorp.com/vault/1.3.0/vault_1.3.0_linux_amd64.zip'
+    dest: '{{ vault_install_path | dirname }}'
+    remote_src: true
+  when: not vault_file.stat.exists
+  become: true
