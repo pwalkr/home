@@ -1,6 +1,7 @@
 - pacman:
     name:
       - curl
+      - docker
       - npm
       - rxvt-unicode
       - vim
@@ -12,3 +13,15 @@
       - openssh
       - which
   become: true
+
+- name: 'Give {{ ansible_user }} access to docker'
+  user:
+    name: '{{ ansible_user }}'
+    append: true
+    groups: docker
+
+- name: Enable and start docker
+  systemd:
+    name: docker
+    state: started
+    enabled: true
