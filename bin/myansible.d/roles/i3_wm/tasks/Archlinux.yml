@@ -3,4 +3,9 @@
       - i3-wm
       - xorg-server
       - xorg-xinit
+      # For i3-helper
+      - jq
+      - libnotify
+      # For run command
+      - dmenu
   become: true

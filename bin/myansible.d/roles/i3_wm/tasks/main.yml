@@ -1,6 +1,17 @@
 - name: Install i3 window manager
   include_tasks: '{{ ansible_distribution }}.yml'
 
+- name: Create bin directory
+  file:
+    path: '~/bin'
+    state: directory
+
+- name: Install i3-helper
+  copy:
+    src: i3-helper
+    dest: '~/bin/i3-helper'
+    mode: 'u=rwx,g=rx,o=rx'
+
 - name: Create config directory
   file:
     path: '~/.config/i3'
