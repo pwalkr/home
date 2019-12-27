@@ -38,5 +38,7 @@ _bc_docker_images() {
 }
 
 complete -F _bc_docker_images dockershell
-PATH="$PATH:~/google-cloud-sdk/bin"
-. ~/google-cloud-sdk/completion.bash.inc
+
+if [ -d ~/.bashrc.d ]; then
+	source ~/.bashrc.d/*
+fi

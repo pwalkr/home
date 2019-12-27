@@ -20,3 +20,8 @@
   shell: '{{ gcloud_sdk_install_path }}/install.sh --quiet --additional-components kubectl'
   args:
     creates: '{{ gcloud_sdk_install_path }}/bin/kubectl'
+
+- name: Add bashrc include
+  copy:
+    src: gcloud.sh
+    dest: ~/.bashrc.d/gcloud.sh
