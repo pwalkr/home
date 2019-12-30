@@ -1,0 +1,20 @@
+---
+- name: Run role
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: cloud_foundry
+    - include_role:
+        name: desktop
+    - include_role:
+        name: developer
+    - include_role:
+        name: gcloud
+    - include_role:
+        name: i3_wm
+    - include_role:
+        name: sysadmin
+    - include_role:
+        name: vault
+    - include_role:
+        name: vbox_guest

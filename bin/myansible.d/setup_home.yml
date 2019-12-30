@@ -1,0 +1,12 @@
+---
+- name: Run role
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: desktop
+    - include_role:
+        name: developer
+    - include_role:
+        name: i3_wm
+    - include_role:
+        name: sysadmin

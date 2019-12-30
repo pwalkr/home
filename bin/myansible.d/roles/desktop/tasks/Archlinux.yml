@@ -1,0 +1,6 @@
+- pacman:
+    name:
+      - evince
+      - firefox
+      - nextcloud-client
+  become: true
