@@ -107,4 +107,4 @@ bar {
 #nm-applet --no-startup-id &
 #systemctl --user start synergys
 #xscreensaver &
-exec ~/.config/localrc
+exec ~/.myansible/i3-poststart.sh

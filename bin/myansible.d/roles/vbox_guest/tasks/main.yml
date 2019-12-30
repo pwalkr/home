@@ -1,2 +1,20 @@
 - name: Install VirtualBox guest utilities
   include_tasks: '{{ ansible_distribution }}.yml'
+
+- name: Create ~/.myansible folder
+  file:
+    path: '~/.myansible'
+    state: directory
+
+- name: Create folder for on-desktop-env-start scripts
+  file:
+    path: '~/.myansible/desktop'
+    state: directory
+
+- name: Install VBoxClient-all caller
+  copy:
+    content: |
+      #!/bin/sh
+      VBoxClient-all
+    dest: '~/.myansible/desktop/vbox-guest'
+    mode: u=rwx,g=rwx,o=rx
