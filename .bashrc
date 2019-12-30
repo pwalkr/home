@@ -39,6 +39,6 @@ _bc_docker_images() {
 
 complete -F _bc_docker_images dockershell
 
-if [ -d ~/.bashrc.d ]; then
-	source ~/.bashrc.d/*
+if [ -d ~/.myansible/bashrc.d ]; then
+	source ~/.myansible/bashrc.d/*
 fi

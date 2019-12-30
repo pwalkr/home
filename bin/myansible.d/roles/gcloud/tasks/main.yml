@@ -21,7 +21,12 @@
   args:
     creates: '{{ gcloud_sdk_install_path }}/bin/kubectl'
 
+- name: Create bashrc include dir
+  file:
+    path: '~/.myansible/bashrc.d'
+    state: directory
+
 - name: Add bashrc include
   copy:
     src: gcloud.sh
-    dest: ~/.bashrc.d/gcloud.sh
+    dest: '~/.myansible/bashrc.d/gcloud.sh'
