@@ -11,6 +11,7 @@
     src: i3-poststart.sh
     dest: '~/.myansible/i3-poststart.sh'
     mode: preserve
+    backup: yes
 
 - name: Create bin directory
   file:
@@ -22,6 +23,7 @@
     src: i3-helper
     dest: '~/bin/i3-helper'
     mode: preserve
+    backup: yes
 
 - name: Create config directory
   file:

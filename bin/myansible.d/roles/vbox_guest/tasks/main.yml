@@ -17,4 +17,4 @@
       #!/bin/sh
       VBoxClient-all
     dest: '~/.myansible/desktop/vbox-guest'
-    mode: u=rwx,g=rwx,o=rx
+    backup: yes
