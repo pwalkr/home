@@ -64,7 +64,7 @@
 #ssh_args=
 #telnet=telnet
 #telnet_args=
-#terminal=xterm
+terminal=urxvt
 #terminal_allow_send_events=-xrm '*.VT100.allowSendEvents:true'
 #terminal_args=
 #terminal_bg_style=dark
