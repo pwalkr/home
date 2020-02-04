@@ -2,3 +2,9 @@
   include_tasks: '{{ ansible_distribution }}.yml'
 
 - include_role: name=gcloud
+
+- name: Install clusterssh config
+  copy:
+    src: clusterssh-config
+    dest: '~/.clustterssh/config'
+    backup: yes
