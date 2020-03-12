@@ -1,8 +1,0 @@
-# tgz:
-wget -qO- "$link" | tar -xz
-
-# bz2:
-wget -qO- "$link" | tar -xj
-
-# strip pkg-v1.2.3/
-wget -qO- "$link" | tar -x --strip-components=1

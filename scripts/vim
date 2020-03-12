@@ -1,5 +1,0 @@
-# Auto-format xml. Select, then:
-:'<,'>!xmllint --format -
-
-# Auto-format json:
-:%!python -m json.tool

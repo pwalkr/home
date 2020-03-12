@@ -1,7 +1,0 @@
-#!/bin/bash
-
-while true; do
-	tput clear
-	date +"%H : %M" | figlet -c -t
-	sleep 10
-done

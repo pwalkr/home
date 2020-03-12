@@ -1,2 +1,0 @@
-# Grep and awk in a single command:
-awk -F= '/^key=/{print $2}'

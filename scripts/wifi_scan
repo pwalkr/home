@@ -1,5 +1,0 @@
-#!/bin/bash
-
-list=$(iwlist scan 2>&1 | grep ESSID | awk -F: '{print $2}')
-
-echo "${list//\"/}"

@@ -1,8 +1,0 @@
-# Luks-encrypt device (lvm volume group)
-cryptsetup luksFormat /dev/mapper/vg1
-
-# Open luks-encrypted device:
-cryptsetup luksOpen /dev/mapper/vg1 luks1
-
-# For symmetry: close device
-cryptsetup luksClose luks1

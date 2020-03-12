@@ -1,2 +1,0 @@
-#netstat -lnptu
-ss -l
