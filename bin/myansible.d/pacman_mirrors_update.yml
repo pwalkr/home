@@ -1,0 +1,13 @@
+---
+- name: Update pacman mirrorlist
+  hosts: localhost
+  tasks:
+    - name: Get new mirrorlist using reflector
+      command: >
+        reflector --save /etc/pacman.d/mirrorlist
+          --age 12
+          --country US
+          --latest 5
+          --protocol https
+          --sort rate
+      become: true

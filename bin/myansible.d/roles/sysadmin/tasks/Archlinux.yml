@@ -6,6 +6,9 @@
       - tree
       - wget
 
+      # For upgrading mirror lists
+      - reflector
+
       - remmina
       # Protocol-specific libraries
       - freerdp
