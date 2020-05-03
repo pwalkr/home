@@ -1,0 +1,18 @@
+---
+- name: Run role
+  hosts: localhost
+  tasks:
+    - name: Install pykeepass
+      pip:
+        name: pykeepass
+        extra_args: --user
+
+    - name: Create ansible lookup plugins directory
+      file:
+        path: ~/.ansible/plugins/lookup
+        state: directory
+
+    - name: Install ansible plugin
+      get_url:
+        url: https://raw.githubusercontent.com/viczem/ansible-keepass/master/keepass.py
+        dest: ~/.ansible/plugins/lookup/keepass.py
