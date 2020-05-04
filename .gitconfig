@@ -4,6 +4,7 @@
     message = log -1 --format=%B
     orphans = "!git tree `git reflog --format=%h`"
     tree = log --graph --oneline
+    treef = log --graph --oneline --name-only
     wip = commit -am wip
 [color]
     ui = true
