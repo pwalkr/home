@@ -1,0 +1,9 @@
+- name: Install vagrant
+  package:
+    name:
+      - libvirt
+      - vagrant
+  become: true
+
+- name: Install libvirt plugin
+  command: vagrant plugin install vagrant-libvirt
