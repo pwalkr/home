@@ -86,11 +86,11 @@ append_git() {
 				PROMPT="$PROMPT!"
 			elif [ "$ghash" != "$uhash" ]; then
 				if git rev-list HEAD 2>/dev/null | grep --quiet --max-count=1 $uhash; then
-					PROMPT="$PROMPT+"
+					PROMPT="$PROMPT+ "
 				elif git rev-list $upstream 2>/dev/null | grep --quiet --max-count=1 $ghash; then
-					PROMPT="$PROMPT-"
+					PROMPT="$PROMPT- "
 				else
-					PROMPT="$PROMPT~"
+					PROMPT="$PROMPT~ "
 				fi
 			fi
 		fi
@@ -109,7 +109,7 @@ append_git() {
 
 		# New un-tracked files
 		if git status --porcelain 2>/dev/null | grep --quiet "^?? "; then
-			PROMPT="$PROMPT*"
+			PROMPT="$PROMPT *"
 		fi
 
 		PROMPT="$PROMPT$ACCENT )$DASH"
