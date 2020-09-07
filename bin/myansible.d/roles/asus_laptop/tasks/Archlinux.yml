@@ -1,0 +1,12 @@
+# Latest upgrade (kernel 5.8.7) does not properly detect keyboard
+# https://bbs.archlinux.org/viewtopic.php?id=257963
+- name: Install Xorg keyboard configuration
+  copy:
+    content: |
+      Section "InputClass"
+              Identifier "Asus WMI hotkeys"
+              MatchProduct "Asus WMI hotkeys"
+              Option "Ignore" "on"
+      EndSection
+    dest: /etc/X11/xorg.conf.d/00-keyboard.conf
+  become: true
