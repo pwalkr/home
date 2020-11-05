@@ -1,7 +1,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-PATH="$HOME/bin:$PATH:$HOME/dev-tools/bin"
+PATH="$HOME/bin:$PATH:$HOME/.local/bin"
 PS1='$(s=$?; l="$(history 1)"; $HOME/.ps1 "${l:7}" "$s")'
 
 alias cpr='rsync --archive --progress'
