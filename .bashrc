@@ -4,6 +4,7 @@
 PATH="$HOME/bin:$PATH:$HOME/.local/bin"
 PS1='$(s=$?; l="$(history 1)"; $HOME/.ps1 "${l:7}" "$s")'
 
+alias em='emacs -nw'
 alias cpr='rsync --archive --progress'
 alias grep='grep --color=auto'
 alias ll='ls -al'
