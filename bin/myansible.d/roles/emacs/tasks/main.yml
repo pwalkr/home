@@ -1,0 +1,29 @@
+- name: Install emacs
+  package:
+    name: emacs
+  become: true
+
+- name: Create plugin directory
+  file:
+    path: '{{ plugin_install_path }}'
+    state: directory
+
+- name: Download beancount plugin
+  get_url:
+    url: 'https://raw.githubusercontent.com/beancount/beancount-mode/main/beancount.el'
+    dest: '{{ plugin_install_path }}/beancount.el'
+
+- name: Clone evil plugin
+  git:
+    repo: https://github.com/emacs-evil/evil.git
+    dest: '~/.emacs.d/evil'
+
+- name: Download yaml-mode plugin
+  get_url:
+    url: 'https://raw.githubusercontent.com/yoshiki/yaml-mode/master/yaml-mode.el'
+    dest: '{{ plugin_install_path }}/yaml-mode.el'
+
+- name: Install init.el base
+  template:
+    src: init.el.j2
+    dest: '~/.emacs.d/init.el'

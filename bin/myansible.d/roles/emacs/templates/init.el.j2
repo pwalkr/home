@@ -1,0 +1,15 @@
+; Global Settings
+(global-display-line-numbers-mode)
+(setq require-final-newline "t")
+
+(add-to-list 'load-path "{{ plugin_install_path }}")
+
+(require 'beancount)
+(add-to-list 'auto-mode-alist '("\\.beancount\\'" . beancount-mode))
+
+(add-to-list 'load-path "~/.emacs.d/evil")
+(require 'evil)
+(evil-mode 1)
+
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.ya*ml\\'" . yaml-mode))
