@@ -9,7 +9,7 @@ set $mod Mod4
 bindsym $mod+Shift+Return exec urxvt
 
 # Internet Browser
-bindsym $mod+Shift+i exec firefox
+bindsym $mod+Shift+i exec brave
 
 # Any (run launcher)
 bindsym $mod+r exec dmenu_run
@@ -18,7 +18,7 @@ bindsym $mod+r exec dmenu_run
 bindsym $mod+Control+q kill
 
 # Lock Screen
-bindsym $mod+Shift+l exec xscreensaver-command --lock
+bindsym $mod+l exec i3lock
 
 bindsym XF86MonBrightnessDown exec ~/bin/backlight -dec 10
 bindsym XF86MonBrightnessUp exec ~/bin/backlight -inc 10
@@ -107,4 +107,4 @@ bar {
 #nm-applet --no-startup-id &
 #systemctl --user start synergys
 #xscreensaver &
-exec ~/.myansible/i3-poststart.sh
+exec ~/.config/localrc
