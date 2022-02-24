@@ -39,7 +39,6 @@ cd "$myansible_d"
 export ANSIBLE_NOCOWS=1
 
 ARGS=(
-    "--ask-become-pass"
     "--connection=local"
     "--inventory=localhost,"
 )

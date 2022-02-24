@@ -2,55 +2,31 @@
 - name: Update system
   hosts: localhost
   tasks:
+    - debug:
+        msg: "Distribution: '{{ ansible_distribution }}'"
+
+    - set_fact:
+        commands: []
 
     # Update according to local package manager
+    - set_fact:
+        commands: '{{ commands + ["apt dist-upgrade"] }}'
+      when: ansible_distribution == 'Ubuntu'
 
-    - name: Check for apt
-      command: which apt
-      register: which_apt
-      changed_when: false
-      failed_when: false
-
-    - name: apt dist-upgrade
-      apt:
-        upgrade: dist
-      become: true
-      when: which_apt.stdout != ''
-
-    - name: Check for pacman
-      command: which pacman
-      register: which_pacman
-      changed_when: false
-      failed_when: false
-
-    - name: pacman -Syu
-      pacman:
-        update_cache: yes
-        upgrade: yes
-      become: true
-      when: which_pacman.stdout != ''
-
-      # Upgrade atom IDE
-
-    - name: Check for apm
-      command: which apm
-      register: which_apm
-      changed_when: false
-      failed_when: false
-
-    - name: 'apm upgrade && Rebuild'
-      shell: 'apm upgrade && apm rebuild'
-      when: which_apm.stdout != ''
+    - set_fact:
+        commands: '{{ commands + ["pacman -Syu"] }}'
+      when: ansible_distribution == 'Archlinux'
 
       # Upgrade python pip packages
-
     - name: Check for pip
       command: which pip
       register: which_pip
       changed_when: false
       failed_when: false
 
-    - name: pip install -U all
-      shell: 'pip list --outdated --format=freeze | cut -d= -f1 | xargs -n1 pip install -U'
-      become: true
+    - set_fact:
+        commands: '{{ commands + ["pip list --outdated --format=freeze | cut -d= -f1 | xargs -n1 pip install -U"] }}'
       when: which_pip.stdout != ''
+
+    - debug:
+        msg: '{{ ["Run these commands to perform an update:"] + commands }}'
