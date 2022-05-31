@@ -4,6 +4,14 @@ Plug 'scrooloose/nerdtree'
 call plug#end()
 
 set nocompatible           " Disable any vi-compatibility
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'hashivim/vim-terraform'
+call vundle#end()
+filetype plugin indent on
+
 set ruler                  " Always show line/col# stats
 set number                 " Display line numbers
 set hlsearch               " Highlight the latest search pattern
@@ -24,6 +32,9 @@ set smartindent            " Smarter than 'autoindent'
 
 " Colors
 colorscheme desert
+
+" No/transparent background
+highlight Normal guibg=NONE ctermbg=NONE
 
 " Highlight uwanted spaces
 "highlight ExtraWhitespace ctermbg=darkgray guibg=darkgray
