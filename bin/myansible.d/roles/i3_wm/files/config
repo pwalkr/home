@@ -46,7 +46,10 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # Remove titles for new windows
-new_window pixel 2
+default_border pixel 2
+default_floating_border pixel 2
+# Hack https://gist.github.com/lirenlin/9892945
+for_window [class="^.*"] border pixel 2
 
 # toggle fullscreen mode
 bindsym $mod+f fullscreen toggle
