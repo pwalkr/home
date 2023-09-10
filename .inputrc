@@ -1,0 +1,3 @@
+$include /etc/inputrc
+# https://askubuntu.com/a/87066
+set completion-ignore-case On
