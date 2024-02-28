@@ -12,32 +12,3 @@
     dest: '~/.myansible/i3-poststart.sh'
     mode: preserve
     backup: yes
-
-- name: Create bin directory
-  file:
-    path: '~/bin'
-    state: directory
-
-- name: Install i3-helper
-  copy:
-    src: i3-helper
-    dest: '~/bin/i3-helper'
-    mode: preserve
-    backup: yes
-
-- name: Create config directory
-  file:
-    path: '~/.config/i3'
-    state: directory
-
-- name: Install config
-  copy:
-    src: config
-    dest: '~/.config/i3/config'
-    backup: yes
-
-- name: Install xinitrc
-  copy:
-    src: xinitrc
-    dest: '~/.xinitrc'
-    backup: yes
