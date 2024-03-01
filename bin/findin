@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Find files by partial (case insensitive) filename
+
+if [ ! "$2" ]; then
+    echo "Usage: $(basename "$0") <path-to-search> <match-string> [optional args]"
+    exit
+fi
+
+path="$1"
+name="$2"
+shift 2
+
+set -x
+find "$path" -iname "*$name*" "$@"
