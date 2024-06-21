@@ -6,7 +6,9 @@
     orphans = "!git tree `git reflog --format=%h`"
     tree = log --graph --oneline
     treef = log --graph --oneline --name-only
-    wip = commit -am wip
+    wipfl = "!gd() { git diff --name-only $1; }; gb() { gd; gd --cached; }; gb | sort | tr '\n' ',' | sed 's/,$//'"
+    wipcm = "!cm=\"wip: $(git wipfl)\"; if test `printf %s \"$cm\" | wc -c` -lt 50; then echo $cm; else echo ${cm:o:47}...; fi"
+    wip = "!git commit -am \"`git wipcm`\""
 [color]
     ui = true
 [core]
