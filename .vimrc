@@ -50,7 +50,7 @@ highlight TabsWhitespace ctermbg=darkgray guibg=darkgray
 2match TabsWhitespace /\t\+/
 
 if exists('+colorcolumn')
-    set colorcolumn=81
+    "set colorcolumn=81
 endif
 
 " Disable F1 Help Menu
