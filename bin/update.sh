@@ -12,4 +12,4 @@ sudo reflector \
 
 sudo pacman -Syu
 
-arch-aur-install.sh brave-bin
+#arch-aur-install.sh activitywatch
