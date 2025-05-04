@@ -12,4 +12,4 @@ sudo reflector \
 
 sudo pacman -Syu
 
-#arch-aur-install.sh activitywatch
+arch-aur-install.sh visual-studio-code-bin
