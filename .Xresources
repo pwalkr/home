@@ -45,6 +45,15 @@ urxvt*fading: 0
 urxvt*scrollBar: false
 urxvt*font: xft:Bitstream\ Vera\ Sans\ Mono:style=roman:pixelsize=11
 
+! Remap copy/paste for consistency with other systems
+URxvt.keysym.Control-Meta-c: builtin-string:
+URxvt.keysym.Control-Meta-v: builtin-string:
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+
+! Disable ISO14755 mode
+URxvt.iso14755: false
+
 xterm*faceName: terminus:pixelsize=14
 xterm*foreground: #f2f2f2
 xterm*background: #101010
