@@ -61,6 +61,10 @@ bindsym $mod+Shift+space floating toggle
 # Use Mouse+$mod to drag floating windows
 floating_modifier $mod
 
+# Auto-float windows
+for_window [class="KeePassXC"] floating enable
+for_window [class="URxvt"] floating enable
+
 # switch to workspace
 bindsym $mod+1 exec ~/bin/i3-helper summon 1
 bindsym $mod+2 exec ~/bin/i3-helper summon 2
