@@ -18,6 +18,7 @@
     "[xml]": {
         "editor.defaultFormatter": "redhat.vscode-xml"
     },
+    "xml.server.preferBinary": true,
     "chat.viewSessions.orientation": "stacked",
     "claudeCode.preferredLocation": "panel"
 }
