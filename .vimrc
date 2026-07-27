@@ -6,10 +6,6 @@ call plug#end()
 set nocompatible           " Disable any vi-compatibility
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'hashivim/vim-terraform'
-call vundle#end()
 filetype plugin indent on
 
 set ruler                  " Always show line/col# stats
