@@ -4,6 +4,7 @@
     hold = branch hold
     message = log -1 --format=%B
     orphans = "!git tree `git reflog --format=%h`"
+    pf = push --force-with-lease
     tree = log --graph --oneline
     treef = log --graph --oneline --name-only
     wipfl = "!gd() { git diff --name-only $1; }; gb() { gd; gd --cached; }; gb | sort | tr '\n' ',' | sed 's/,$//'"
