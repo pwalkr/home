@@ -1,0 +1,3 @@
+[Battery][SuspendAndShutdown]
+AutoSuspendIdleTimeoutSec=900
+InhibitLidActionWhenExternalMonitorPresent=false
