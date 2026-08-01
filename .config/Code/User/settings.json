@@ -20,5 +20,6 @@
     },
     "xml.server.preferBinary": true,
     "chat.viewSessions.orientation": "stacked",
-    "claudeCode.preferredLocation": "panel"
+    "claudeCode.preferredLocation": "panel",
+    "chat.disableAIFeatures": true
 }
