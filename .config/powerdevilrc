@@ -1,3 +1,9 @@
+[AC][SuspendAndShutdown]
+AutoSuspendAction=0
+
+[Battery][Display]
+TurnOffDisplayIdleTimeoutSec=600
+
 [Battery][SuspendAndShutdown]
+AutoSuspendAction=0
 AutoSuspendIdleTimeoutSec=900
-InhibitLidActionWhenExternalMonitorPresent=false
