@@ -18,3 +18,7 @@ sudo reflector \
 
 # paru handles dependencies
 paru -Syu
+
+fwupdmgr refresh
+fwupdmgr get-updates
+fwupdmgr update
