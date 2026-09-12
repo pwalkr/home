@@ -108,6 +108,7 @@ Switch to Screen to the Left=none,none,Switch to Screen to the Left
 Switch to Screen to the Right=none,none,Switch to Screen to the Right
 Toggle Night Color=none,none,Suspend/Resume Night Light
 Toggle Window Raise/Lower=none,none,Toggle Window Raise/Lower
+TrackMouse=none,none,Track mouse
 Walk Through Windows=Alt+Tab\tMeta+Tab,Alt+Tab\tMeta+Tab,Walk Through Windows
 Walk Through Windows (Reverse)=Alt+Shift+Tab\tMeta+Shift+Tab,Alt+Shift+Tab\tMeta+Shift+Tab,Walk Through Windows (Reverse)
 Walk Through Windows Alternative=none,none,Walk Through Windows Alternative

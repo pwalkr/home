@@ -13,6 +13,7 @@ Active=true
 
 [Plugins]
 fadedesktopEnabled=true
+hidecursorEnabled=true
 slideEnabled=false
 
 [Tiling][39a369fc-89f1-48b7-a431-31988a83bfda][2ab9da9f-7347-4aeb-b6ac-789567685f01]
