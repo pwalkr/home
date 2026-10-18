@@ -9,7 +9,7 @@
     pf = push --force-with-lease
     tree = log --graph --oneline
     treef = log --graph --oneline --name-only
-    wipfl = "!gd() { git diff --name-only $1; }; gb() { gd; gd --cached; }; gb | sort | tr '\n' ',' | sed 's/,$//'"
+    wipfl = "!gd() { git diff --name-only $1; }; gb() { gd; gd --cached; }; gb | sort | paste -sd, -"
     wipcm = "!cm=\"wip: $(git wipfl)\"; if test `printf %s \"$cm\" | wc -c` -lt 50; then echo $cm; else echo ${cm:o:47}...; fi"
     wip = "!git commit -am \"`git wipcm`\""
 [color]
