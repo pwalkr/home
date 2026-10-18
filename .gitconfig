@@ -1,36 +1,36 @@
 [alias]
-    detach = "!b=`git rev-parse --abbrev-ref HEAD`; git checkout `git rev-parse HEAD` && git branch -d \"$b\""
-    df = diff --color-moved
-    dfw = df --color-moved-ws=ignore-all-space
-    fixup = commit --amend --no-edit
-    hold = branch hold
-    message = log -1 --format=%B
-    orphans = "!git tree `git reflog --format=%h`"
-    pf = push --force-with-lease
-    tree = log --graph --oneline
-    treef = log --graph --oneline --name-only
-    wipfl = "!gd() { git diff --name-only $1; }; gb() { gd; gd --cached; }; gb | sort | paste -sd, -"
-    wipcm = "!cm=\"wip: $(git wipfl)\"; if test `printf %s \"$cm\" | wc -c` -lt 50; then echo $cm; else echo ${cm:o:47}...; fi"
-    wip = "!git commit -am \"`git wipcm`\""
+	detach = "!b=`git rev-parse --abbrev-ref HEAD`; git checkout `git rev-parse HEAD` && git branch -d \"$b\""
+	df = diff --color-moved
+	dfw = df --color-moved-ws=ignore-all-space
+	fixup = commit --amend --no-edit
+	hold = branch hold
+	message = log -1 --format=%B
+	orphans = "!git tree `git reflog --format=%h`"
+	pf = push --force-with-lease
+	tree = log --graph --oneline
+	treef = log --graph --oneline --name-only
+	wipfl = "!gd() { git diff --name-only $1; }; gb() { gd; gd --cached; }; gb | sort | paste -sd, -"
+	wipcm = "!cm=\"wip: $(git wipfl)\"; if test `printf %s \"$cm\" | wc -c` -lt 50; then echo $cm; else echo ${cm:o:47}...; fi"
+	wip = "!git commit -am \"`git wipcm`\""
 [color]
-    ui = true
+	ui = true
 [core]
-    editor = vim
-    excludesfile = ~/.gitignore-global
-    # This is a hack to reduce diff tabstop from 8 to 4
-    pager = less -x1,5
+	editor = vim
+	excludesfile = ~/.gitignore-global
+	# This is a hack to reduce diff tabstop from 8 to 4
+	pager = less -x1,5
 [push]
-    default = upstream
+	default = upstream
 [include]
-    # User preferences in a separate file for better modularity
-    path = .gituser
-        #[user]
-        #    name = John Doe
-        #    email = johndoe@example.com
+	# User preferences in a separate file for better modularity
+	path = .gituser
+	#[user]
+	#	name = John Doe
+	#	email = johndoe@example.com
 [pull]
-    ff = only
+	ff = only
 [advice]
-    detachedHead = false
+	detachedHead = false
 [merge]
 	tool = vimdiff
 [mergetool]
