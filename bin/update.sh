@@ -16,8 +16,10 @@ sudo reflector \
 #arch-aur-install.sh brave-bin
 #arch-aur-install.sh python-rtslib-fb
 
-# paru handles dependencies
+# paru handles aur/dependencies
 paru -Syu
+
+flatpak upgrade
 
 fwupdmgr refresh
 fwupdmgr get-updates
