@@ -21,5 +21,6 @@
     "xml.server.preferBinary": true,
     "chat.viewSessions.orientation": "stacked",
     "claudeCode.preferredLocation": "panel",
-    "chat.disableAIFeatures": true
+    "chat.disableAIFeatures": true,
+    "claudeCode.hideOnboarding": true
 }
